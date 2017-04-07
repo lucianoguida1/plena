@@ -1,0 +1,216 @@
+<?php 
+if(isset($view_dados)){
+	$tag = $view_dados->tag;
+	$desc = $view_dados->descricao;
+	$dis = "disabled=''";
+}else{
+	$tag = "";$desc = "";$dis = "";
+}
+?>
+<style type="text/css">
+	#erro1,#erro0,#erro2,#erro3{
+		color: red;
+	}
+</style>
+<datalist id="tags">
+	<?php foreach(equipamento::all() as $val){?>
+		<option value="<?=$val->tag?>">
+			<?php } ?>
+		</datalist>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#btnAddPeca").click(function(event) {
+					var i = parseInt($(this).val());
+					$("#addPeca").append('<div class="form-group form-inline"><label>Peça:</label><input type="text" class="form-control" placeholder="Peça" name="peca-'+i+'"><label> Quantidade: </label><input type="number" class="form-control"  placeholder="Quantidade" name="qnt-'+i+'"></div>');
+					$(this).val(i+1);
+				});
+				$("#btnAddMec").click(function(event) {
+					var i = parseInt($(this).val());
+					$("#addMec").append('<label>Nome: </label><select name="nome-'+i+'" class="form-control"><option value="" disabled="" selected="">Selecione....</option><?php foreach(Mecanico::all() as $val){ ?><option value="<?=$val->id?>"><?=$val->inscricao?>/<?=$val->nome?></option><?php } ?></select>');
+					$(this).val(i+1);
+				});
+				$("#pro1").click(function(event) {
+					if($("#tag").val() != ""){
+						if($("#desEquip").val() != ""){
+							$(this).parent().hide("fast");
+							$("#pro2").parent().show('fast');
+							$("#erro0").html("");
+						}else{$("#erro0").html("Preencha todos os campos!")}
+					}else{$("#erro0").html("Preencha todos os campos!")}
+				});
+				$("#pro2").click(function(event) {
+					if($("#desServico").val() != ""){
+						if($("#datainicio").val() != ""){
+							if($("#horainicio").val() != ""){
+								if($("#datafim").val() != ""){
+									if($("#horafim").val() != ""){
+										$(this).parent().hide("fast");
+										$("#pro3").parent().show('fast');
+										$("#erro1").html("");
+									}else{$("#erro1").html("Preencha todos os campos!")}
+								}else{$("#erro1").html("Preencha todos os campos!")}
+							}else{$("#erro1").html("Preencha todos os campos!")}
+						}else{$("#erro1").html("Preencha todos os campos!")}
+					}else{$("#erro1").html("Preencha todos os campos!")}
+				});
+				$("#pro3").click(function(event) {
+					$(this).parent().hide("fast");
+					$("#btnAddMec").parent().show('fast');
+				});
+
+				$("#volta1").click(function(event) {
+					$(this).parent().hide("fast");
+					$("#volta2").parent().show('fast');
+				});
+				$("#volta2").click(function(event) {
+					$(this).parent().hide("fast");
+					$("#volta3").parent().show('fast');
+				});
+				$("#volta3").click(function(event) {
+					$(this).parent().hide("fast");
+					$("#pro1").parent().show('fast');
+				});
+				$("#tag").blur(function(){
+					$.ajax({
+						type: "post",
+						data: "tag="+$("#tag").val(),
+						dataType: "html",
+						url: "<?=SITE?>ajax/Equip/"+$("#tag").val(), 
+						success: function(result){
+							$("#desEquip").val(result);
+						}})
+				});
+				$("#forms").submit(function(event) {
+					$("#tag").removeAttr('disabled');
+				});
+			});
+		</script>
+		<section id="index-container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2" id="index-wrapper">
+					<div class="panel panel-primary animated flipInY">
+						<div class="panel-heading">
+							<h3 class="panel-title text-center">     
+								FORMULARIO DE MANUENTÇÃO
+							</h3>      
+						</div>
+						<div class="panel-body">
+							<form method="post" id="forms" action="<?=SITE?>registro/salvar" enctype="multipart/form-data">
+								<fieldset><legend>EQUIPAMENTO</legend>
+									<div class="form-group">
+										<label for="tag">TAG</label>
+										<input type="text" autocomplete="off" list="tags" class="form-control" required="" id="tag" placeholder="TAG" name="tag" value="<?=$tag?>" <?=$dis?>>
+									</div>
+									<div class="form-group">
+										<label for="desEquip">Descrição do equipamento</label>
+										<textarea class="form-control" id="desEquip" name="desEquip" rows="3" placeholder="Descrição do Equipamento"><?=$desc?></textarea>
+									</div>
+									<p id="cadastrado">Caso o equipamento não esteja cadastrado ao proceguir ele sera cadastrado!</p>
+									<p id="erro0"></p>
+									<button type="button" id="pro1" class="btn btn-success btn-lg"><b>Proceguir</b></button>
+								</fieldset>
+								<fieldset style="display: none"><legend>SERVIÇO</legend>
+									<div class="radio-inline">
+										<label>
+											<input type="radio" name="tiposervico" id="optionsRadios1" value="Corretiva" checked>
+											Corretiva
+										</label>
+									</div>
+									<div class="radio-inline">
+										<label>
+											<input type="radio" name="tiposervico" id="optionsRadios2" value="Preventiva">
+											Preventiva
+										</label>
+									</div>
+									<div class="radio-inline">
+										<label>
+											<input type="radio" name="tiposervico" id="optionsRadios1" value="Melhoria">
+											Melhoria
+										</label>
+									</div>
+									<div class="radio-inline">
+										<label>
+											<input type="radio" name="tiposervico" id="optionsRadios2" value="Predial">
+											Predial
+										</label>
+									</div><br><br>
+									<label class="checkbox-inline">
+										<input type="checkbox" id="parada" name="parada" value="parada"> <b>Ocorreu parada da produção</b>
+									</label><br><br>
+
+									<label for="desServico">Descrição do serviço</label>
+									<textarea class="form-control" id="desServico" name="desServico" rows="3" placeholder="Descrição do servço"></textarea><br>
+									<div class="form-group">
+										<label for="datainicio">Data de inicio</label>
+										<input type="date" class="form-control" required="" id="datainicio" name="datainicio">
+									</div>
+									<div class="form-group">
+										<label for="horainicio">Horario do inicio</label>
+										<input type="time" class="form-control" required="" id="horainicio" name="horainicio">
+									</div>
+									<div class="form-group">
+										<label for="datafim">Data do fim da ocorrencia</label>
+										<input type="date" class="form-control" required="" id="datafim" name="datafim">
+									</div>
+									<div class="form-group">
+										<label for="horafim">Horario do fim da ocorrencia</label>
+										<input type="time" class="form-control" required="" id="horafim" name="horafim">
+									</div>
+									<p id="erro1"></p>
+									<button type="button" class="btn btn-danger" id="volta3" value="3">
+										<span class="fa fa-arrow-left" aria-hidden="true"></span> Voltar
+									</button>
+									<button type="button" id="pro2" class="btn btn-success btn-lg"><b>Proceguir</b></button>
+								</fieldset>
+								<fieldset style="display: none"><legend>PEÇAS UTILIZADAS</legend>
+									<div class="form-group form-inline">
+										<label>Peça: </label>
+										<input type="text" class="form-control" placeholder="Peça" name="peca1">
+										<label>Quantidade: </label>
+										<input type="number" class="form-control" placeholder="Quantidade" name="qnt1">
+									</div>
+									<div class="form-group form-inline">
+										<label>Peça: </label>
+										<input type="text" class="form-control" placeholder="Peça" name="peca2">
+										<label>Quantidade: </label>
+										<input type="number" class="form-control" placeholder="Quantidade" name="qnt2">
+									</div>
+									<div id="addPeca"></div>
+									<button type="button" class="btn btn-primary" id="btnAddPeca" value="3">
+										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar peça
+									</button><br><br>
+									<button type="button" class="btn btn-danger" id="volta2" value="3">
+										<span class="fa fa-arrow-left" aria-hidden="true"></span> Voltar
+									</button>
+									<button type="button" id="pro3" class="btn btn-success btn-lg"><b>Proceguir</b></button>
+								</fieldset>
+								<fieldset style="display: none"><legend>EXECUTANTE</legend>
+									<label>Nome: </label>
+									<select name="nome1" required="" class="form-control">
+										<option value="" disabled="" selected="">Selecione....</option>
+										<?php foreach(Mecanico::all() as $val){ ?>
+										<option value="<?=$val->id?>"><?=$val->inscricao?>/<?=$val->nome?></option>
+										<?php } ?>
+									</select>
+									<label>Nome: </label>
+									<select name="nome2" class="form-control">
+										<option value="" disabled="" selected="">Selecione....</option>
+										<?php foreach(Mecanico::all() as $val){ ?>
+										<option value="<?=$val->id?>"><?=$val->inscricao?>/<?=$val->nome?></option>
+										<?php } ?>
+									</select>
+									<div id="addMec"></div>
+									<button type="button" class="btn btn-primary" id="btnAddMec" value="3">
+										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Execultante
+									</button><br><br>
+									<button type="button" class="btn btn-danger" id="volta1" value="3">
+										<span class="fa fa-arrow-left" aria-hidden="true"></span> Voltar
+									</button><br><br>
+									<button type="submit" class="btn btn-success form-control">Salvar</button>
+								</fieldset><br><br>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>

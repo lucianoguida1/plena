@@ -1,0 +1,31 @@
+
+<section id="index-container">
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1" id="index-wrapper">
+			<div class="panel panel-primary animated flipInY">
+				<div class="panel-heading">
+					<h3 class="panel-title text-center">     
+						Todos Equipamentos
+					</h3>      
+				</div>
+				<div class="panel-body">
+					<?php foreach(Equipamento::all() as $val){?>
+						<div class="col-md-4 book">
+							<div class="panel panel-info animated flipInY">
+								<div class="panel-heading">
+									<h3 class="panel-title text-center">     
+										<b><?=$val->tag?></b>
+									</h3>      
+								</div>
+								<div class="panel-body">
+									<?=$val->descricao?></br></br>
+									<a class=" btn btn-info" href="<?=SITE.'registro/index/'.$val->id?>">Enviar Registro</a>
+								</div>
+							</div>
+						</div>
+					<?php } ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

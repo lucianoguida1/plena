@@ -1,0 +1,106 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".lis>li").click(function(){
+			$("li").each(function(index, el) {
+				$(this).removeClass('active');
+				$("#"+$(this).attr('role')).hide();
+			});
+			$(this).addClass('active');
+			$("#"+$(this).attr("role")).show();
+		});
+		$("#pesquisa").keyup(function(){
+			var pesquisa = $(this).val()
+			$(".aqui").each(function(){
+				var registro = $(this).find("h4").html();
+				var match = pesquisa.split(" ").every(function (palavra) {
+					var regex = new RegExp(palavra, "i");
+					return regex.test(registro);
+				});
+				if(!match){
+					var registro = $(this).find("p").html();
+					var match = pesquisa.split(" ").every(function (palavra) {
+						var regex = new RegExp(palavra, "i");
+						return regex.test(registro);
+					});
+					if(!match){
+						$(this).parent().hide();
+					}else{
+						$(this).parent().show();
+					}
+				}else{
+					$(this).parent().show();
+				}
+				$("li").each(function(index, el) {
+					$(this).removeClass('active');
+					$("#"+$(this).attr('role')).hide();
+				});
+				$('[role="1"]').addClass('active');
+				$("#"+$('[role="1"]').attr("role")).show();
+			});
+		});
+	});
+</script>
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="input-group">
+			<input type="text" class="form-control" id="pesquisa" placeholder="Pesquisar...">
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="button">Pesquisar</button>
+			</span>
+		</div><!-- /input-group -->
+	</div><br><br><br>
+	<div class="col-md-12">
+		<ul class="nav nav-tabs lis">
+			<li role="1" class="active"><a href="#">Todos</a></li>
+			<li role="2"><a href="#">Mais Recentes</a></li>
+			<li role="3"><a href="#">Mais Antigos</a></li>
+		</ul>
+	</div>
+</div>
+<div class="row"><br>
+	<div class="col-md-12" id="1">
+		<?php foreach(Registro::all(array("order"=>'id desc','conditions'=>'status = 1')) as $val){ ?>
+			<div class="col-md-3">
+				<div class="well well-sm aqui">
+					<h4><b><?=$val->equipamento->tag?></b></h4>
+					<p><?=$val->descricao_servico?></p>
+					<p><?=$val->data->format('d/m/Y')?></p>
+					<?php foreach($val->operantes as $mac){ ?>
+					<p><b>Mecânico:</b> <?=$mac->mecanico->nome?></p>
+					<?php } ?>
+					<p><a class="btn btn-primary form-control" href="<?=SITE?>visualizar/view/<?=$val->id?>" role="button">Visualizar</a></p>
+				</div>
+			</div>
+			<?php } ?>
+		</div>
+		<div class="col-md-12" id="2" style="display: none">
+			<?php foreach(Registro::all(array("order"=>'data desc','conditions'=>'status = 1')) as $val){ ?>
+				<div class="col-md-3">
+					<div class="well well-sm">
+						<h4><b><?=$val->equipamento->tag?></b></h4>
+						<p><?=$val->descricao_servico?></p>
+						<p><?=$val->data->format('d/m/Y')?></p>
+						<?php foreach($val->operantes as $mac){ ?>
+						<p><b>Mecânico:</b> <?=$mac->mecanico->nome?></p>
+						<?php } ?>
+						<p><a class="btn btn-primary form-control" href="<?=SITE?>visualizar/view/<?=$val->id?>" role="button">Visualizar</a></p>
+					</div>
+				</div>
+				<?php } ?>
+			</div>
+			<div class="col-md-12" id="3" style="display: none">
+				<?php foreach(Registro::all(array("order"=>'data asc','conditions'=>'status = 1')) as $val){ ?>
+					<div class="col-md-3">
+						<div class="well well-sm">
+							<h4><b><?=$val->equipamento->tag?></b></h4>
+							<p><?=$val->descricao_servico?></p>
+							<p><?=$val->data->format('d/m/Y')?></p>
+							<?php foreach($val->operantes as $mac){ ?>
+							<p><b>Mecânico:</b> <?=$mac->mecanico->nome?></p>
+							<?php } ?>
+							<p><a class="btn btn-primary form-control" href="<?=SITE?>visualizar/view/<?=$val->id?>" role="button">Visualizar</a></p>
+						</div>
+					</div>
+					<?php } ?>
+				</div>
+			</div>

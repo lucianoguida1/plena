@@ -1,0 +1,77 @@
+<?php $dias = $view_registro->soma_dias >0?$view_registro->soma_dias." Dias e ":"";$n="";?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var doc = new jsPDF();
+		var specialElementHandlers = {
+			'#editor': function (element, renderer) {
+				return true;
+			}
+		};
+
+		$('#btGerarPDF').click(function () {
+			doc.fromHTML($('fieldset').html(), 15, 15, {
+				'width': 170,
+				'elementHandlers': specialElementHandlers
+			});
+			doc.save('exemplo-pdf.pdf');
+		});
+	});
+</script>
+<style type="text/css">
+	small{
+		float: right;
+		margin-top: -45px;
+		font-size: 10pt;
+	}
+	h3{
+		margin: 0px;
+	}
+	.list-group>a>span{
+		float: right;
+	}
+</style>
+
+<div class="col-md-3">
+	<div class= "list-group" > 
+		<a href="#" class="list-group-item active"> Visualizar Registro <span class="glyphicon glyphicon-search" aria-hidden= "true" ></span></a> 
+		<a href="#" class="list-group-item"  id="btGerarPDF"> Salvar Aquivo <span class="glyphicon glyphicon-download-alt" aria-hidden= "true" ></span></a> 
+		<a href="#" class="list-group-item" data-toggle="modal" data-target="#myModal"> Excluir <span class="glyphicon glyphicon-floppy-remove" aria-hidden= "true" ></span></a> 
+		<a href="<?=SITE.'home'?>" class="list-group-item"> Voltar <span class="glyphicon glyphicon-arrow-left" aria-hidden= "true" ></span></a>
+	</div>
+</div>
+<div class="col-md-9 well">
+	<fieldset>
+		<legend><?=$view_registro->tipo_servico?><br><small>Registro: <?=$view_registro->data->format('Y/m/d H:i:s')?></small></legend>
+		<h3>Equipamento: <?=$view_equipamento->tag?></h3>
+		<!--<p><?=$view_equipamento->descricao?></p>-->
+		<h4><?=$view_registro->descricao_servico?></h4>
+		<p>Seviço demorou <?=$dias?><?=$view_registro->soma_horas." Horas."?></p>
+		<div class="col-md-6">
+			<h4>Pecas utilizadas:</h4>
+			<p><?php foreach($view_pecas as $val){ echo $val->quantidade." ".$val->peca.", ";}?></p>
+		</div>
+		<div class="col-md-6">
+			<h4>Operantes:</h4>
+			<p><?php foreach($view_operantes as $val){ echo $val->mecanico->nome.", ";}?></p>
+		</div>
+	</fieldset>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Confirmar a exclusão do registro?</h4>
+      </div>
+      <div class="modal-body">
+        <p><b>Descrição do serviço:</b> <?=$view_registro->descricao_servico?></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-danger" onclick="location='<?=SITE.'registro/excluir/'.$view_registro->id?>'">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>

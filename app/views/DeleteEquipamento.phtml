@@ -1,0 +1,24 @@
+<section id="index-container">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2" id="index-wrapper">
+			<div class="panel panel-primary animated flipInY">
+				<div class="panel-heading">
+					<h3 class="panel-title text-center">     
+						Excluir equipamento
+					</h3>      
+				</div>
+				<div class="panel-body">
+					<form method="post" action="<?=SITE?>equipamento/delete" enctype="multipart/form-data">
+						<select name="id" class="form-control" required="">
+							<option value="" disabled="" selected="">Selecione....</option>
+							<?php foreach(Equipamento::all() as $val){ ?>
+							<option value="<?=$val->id?>"><?=$val->tag?></option>
+							<?php } ?>
+						</select><br><br>
+						<button class="btn btn-success btn-lg">Deletar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

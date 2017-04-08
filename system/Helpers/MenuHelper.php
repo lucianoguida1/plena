@@ -32,6 +32,12 @@
 							'Cadastrar'=>'Equipamento/cadastrar',
 							'deletar'=>'Equipamento/delete'
 							),
+						"Setores/cogs"=>array(
+							'Todos cadastrado'=>'Setor/',
+							'Cadastrar'=>'Setor/cadastrar',
+							'Deletar'=>'Setor/deletar',
+							'Alterar'=>'Setor/alterar'
+							),
 					);
 					break;
 			}

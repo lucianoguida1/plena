@@ -10,12 +10,13 @@ class EquipamentoController extends Controller{
 	}
 	public function CadastrarAction($msg=""){
 		if($msg != ""){ $data['message'] = $msg;}else{ $data = "";}
+		$data['setores'] = Setor::all();
 		$this->view("cadastroEquipamento",$data,true);
 	}
 	public function SalvarAction(){
 		if(!empty($_REQUEST['tag']) && !empty($_REQUEST['desEquip'])){
 			if(empty(Equipamento::find_by_tag($_REQUEST['tag']))){
-				if(Equipamento::create(array('tag'=>$_REQUEST['tag'],'descricao'=>$_REQUEST['desEquip']))){
+				if(Equipamento::create(array('tag'=>$_REQUEST['tag'],'descricao'=>$_REQUEST['desEquip'],'setor_id'=>$_REQUEST['setor']))){
 					$this->CadastrarAction(array('success','Equipamento cadastrado com suscesso.'));
 				}else{
 					$this->CadastrarAction(array('danger','Ocorreu algum erro durante o cadastro. Tente Novamente!','Caso o problema pressista contate o administrador!'));

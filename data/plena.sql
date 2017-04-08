@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 31-Mar-2017 às 16:09
+-- Generation Time: 08-Abr-2017 às 01:40
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -31,20 +31,21 @@ USE `plena`;
 CREATE TABLE `equipamentos` (
   `id` int(11) NOT NULL,
   `tag` varchar(45) NOT NULL,
-  `descricao` longtext NOT NULL
+  `descricao` longtext NOT NULL,
+  `setor_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `equipamentos`
 --
 
-INSERT INTO `equipamentos` (`id`, `tag`, `descricao`) VALUES
-(2, '#guida', 'Teste'),
-(8, 'Motor', 'Motor'),
-(9, 'Furadeira', 'Furedeira de preção'),
-(10, 'Caldeira', 'Caldas quente'),
-(11, 'Asperção', 'Joga agua'),
-(17, 'Bomba d\'gua', 'Bomba da represa');
+INSERT INTO `equipamentos` (`id`, `tag`, `descricao`, `setor_id`) VALUES
+(2, '#guida', 'Teste', 0),
+(8, 'Motor', 'Motor', 0),
+(9, 'Furadeira', 'Furedeira de preção', 0),
+(10, 'Caldeira', 'Caldas quente', 0),
+(11, 'Asperção', 'Joga agua', 0),
+(17, 'Bomba d\'gua', 'Bomba da represa', 0);
 
 -- --------------------------------------------------------
 
@@ -192,6 +193,25 @@ INSERT INTO `registros` (`id`, `tipo_servico`, `descricao_servico`, `data_inicio
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `setors`
+--
+
+CREATE TABLE `setors` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `setors`
+--
+
+INSERT INTO `setors` (`id`, `nome`) VALUES
+(2, 'Mecânica '),
+(3, 'T.I.');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `users`
 --
 
@@ -221,7 +241,8 @@ INSERT INTO `users` (`id`, `full_name`, `username`, `password`, `salt`, `role`, 
 -- Indexes for table `equipamentos`
 --
 ALTER TABLE `equipamentos`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_equipamentos_setors1_idx` (`setor_id`);
 
 --
 -- Indexes for table `login_attempts`
@@ -265,6 +286,12 @@ ALTER TABLE `registros`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_registros_equipamentos1_idx` (`equipamento_id`),
   ADD KEY `fk_registros_users1_idx` (`user_id`);
+
+--
+-- Indexes for table `setors`
+--
+ALTER TABLE `setors`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -312,6 +339,11 @@ ALTER TABLE `pecas`
 ALTER TABLE `registros`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
+-- AUTO_INCREMENT for table `setors`
+--
+ALTER TABLE `setors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
@@ -319,6 +351,12 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Limitadores para a tabela `equipamentos`
+--
+ALTER TABLE `equipamentos`
+  ADD CONSTRAINT `fk_equipamentos_setors1` FOREIGN KEY (`setor_id`) REFERENCES `setors` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Limitadores para a tabela `operantes`

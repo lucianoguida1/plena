@@ -32,7 +32,7 @@
 							'Cadastrar'=>'Equipamento/cadastrar',
 							'deletar'=>'Equipamento/delete'
 							),
-						"Setores/cogs"=>array(
+						"Setores/bookmark"=>array(
 							'Todos cadastrado'=>'Setor/',
 							'Cadastrar'=>'Setor/cadastrar',
 							'Deletar'=>'Setor/deletar',

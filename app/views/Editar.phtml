@@ -1,0 +1,52 @@
+   <section id="login-container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2" id="login-wrapper">
+                <div class="panel panel-primary animated flipInY">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">     
+                          Editar perfil
+                        </h3>      
+                    </div>
+                    <div class="panel-body">
+                        <form method="post" class="form-horizontal" action="<?=SITE;?>usuarios/salvar" role="form">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label for="nome">Nome Completo</label>
+                                    <input type="text" required="required" class="form-control" id="nome" name="nome" placeholder="Nome completo" value="<?=$view_user->full_name?>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label for="matricula">Usuário</label>
+                                    <input type="number" required="required" id="matricula" class="form-control" name="matricula" placeholder="Matricula"  value="<?=$view_user->username?>">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label for="senha">Senha</label>
+                                    <input type="password" required="required" id="senha" class="form-control" name="senha" placeholder="Senha">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label for="senha2">Confirma Senha</label>
+                                    <input type="password" required="required" id="senha2" class="form-control" name="senhac" placeholder="Confirma Senha">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                               <div class="col-md-12">
+                               		<button type="submit" class="btn btn-primary btn-block">Salvar</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-9 pull-right">
+                                    <a href="<?=SITE?>" class="btn btn-default btn-block">Voltar</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>

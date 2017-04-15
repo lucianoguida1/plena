@@ -46,6 +46,8 @@
 		<h3>Equipamento: <?=$view_equipamento->tag?></h3>
 		<!--<p><?=$view_equipamento->descricao?></p>-->
 		<h4><?=$view_registro->descricao_servico?></h4>
+		<p>Inicio: <?=explode('-',$view_registro->data_inicio)[2]?>/<?=explode('-',$view_registro->data_inicio)[1]?>/<?=explode('-',$view_registro->data_inicio)[0]?> as <?=$view_registro->hora_inicio?></p>
+		<p>Fim: <?=explode('-',$view_registro->data_termino)[2]?>/<?=explode('-',$view_registro->data_termino)[1]?>/<?=explode('-',$view_registro->data_termino)[0]?> as <?=$view_registro->hora_termino?></p>
 		<p>Seviço demorou <?=$dias?><?=$view_registro->soma_horas." Horas."?></p>
 		<div class="col-md-6">
 			<h4>Pecas utilizadas:</h4>

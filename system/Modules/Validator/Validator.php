@@ -122,6 +122,16 @@
 			}
 			return $this->resetValid(true);
 		}
+
+		public function field_cadastrado2($field){
+			if(Auth::userActive()->username != $this->request[$field]){
+				if(!empty(User::find_by_username($this->request[$field]))) {
+					$this->setError($field,107);
+					return $this->resetValid(false);
+				}
+			}
+			return $this->resetValid(true);
+		}
 		/**
 		 * Método responsável por validar se o valor do campo é numérico
 		 * @param  string  $field Campo a ser validado

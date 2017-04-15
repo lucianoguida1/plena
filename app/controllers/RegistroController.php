@@ -12,7 +12,7 @@ Class RegistroController extends Controller{
 		$diff = $datatime1->diff($datatime2);
 		$equipamento = Equipamento::find_by_tag($_REQUEST['tag']);
 		if(empty($equipamento)){
-			Equipamento::create(array('tag'=>$_REQUEST['tag'],'descricao'=>$_REQUEST['desEquip']));
+			Equipamento::create(array('tag'=>$_REQUEST['tag'],'descricao'=>$_REQUEST['desEquip'],'setor_id'=>$_REQUEST['setor']));
 			$equipamento = Equipamento::last();
 		}
 		$registro = array(
@@ -74,6 +74,7 @@ Class RegistroController extends Controller{
 
 	public function CadastrarAction($msg=""){
 		if($msg != ""){ $data['message'] = $msg;}else{ $data = "";}
+		$data['setores'] = Setor::all();
 		$this->view('formregistro',$data,true);
 	}
 }

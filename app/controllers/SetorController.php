@@ -42,10 +42,17 @@
 			}elseif(isset($_POST['id'])){
 				$setor = Setor::find($_POST['id']);
 				if(!empty($setor)){
-					$setor->delete();
-					$this->view("SetorDeletar",array('message'=>array('success','O setor <b>'.$setor->nome.'</b> foi alterado com sucesso!')));
+					if(!empty($setor->equipamentos)){
+						$setor->delete();
+						$texto = "O setor <b>".$setor->nome."</b> foi deletado com sucesso!";
+					}else{
+						$setor->status = 2;
+						$setor->save();
+						$texto = "O setor <b>".$setor->nome."</b> foi anulado com sucesso. não ocorreu o exclusão por aver equipamentos cadastrado nesse setor!";
+					}
+					$this->view("SetorDeletar",array('message'=>array('success',$texto)));
 				}else{
-					$this->view("SetorDeletar",array('message'=>array('danger','Erro ao cadastrar, tente novamente.<br> Caso o problema pressista contate o administrador!')));
+					$this->view("SetorDeletar",array('message'=>array('danger',$texto)));
 				}
 			}else{
 				$this->IndexAction();

@@ -6,4 +6,12 @@
 				echo Equipamento::find_by_tag($tag)->descricao;
 			}
 		}
+		public function VerificaAction($tag=""){
+			if($tag=="" && $_REQUEST['tag'] !=""){ $tag=$_REQUEST['tag'];}
+			if(empty(Equipamento::find_by_tag($tag))){
+				echo "true";
+			}else{
+				echo "false";
+			}
+		}
 	}

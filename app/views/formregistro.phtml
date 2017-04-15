@@ -11,6 +11,13 @@ if(isset($view_dados)){
 	#erro1,#erro0,#erro2,#erro3{
 		color: red;
 	}
+	.carrega{
+		cursor: pointer;
+	}
+	.back{
+		background-color: rgba(255,0,0,.8);
+		color: white;
+	}
 </style>
 <datalist id="tags">
 	<?php foreach(equipamento::all() as $val){?>
@@ -75,6 +82,18 @@ if(isset($view_dados)){
 						type: "post",
 						data: "tag="+$("#tag").val(),
 						dataType: "html",
+						url: "<?=SITE?>ajax/verifica/"+$("#tag").val(), 
+						success: function(result){
+							if(result == "true"){
+								$("#setor").html('<div class="form-group"><label>Setor</label><select name="setor" class="form-control"><option selected="" disabled="">Selecione...</option><?php foreach($view_setores as $val){ ?><option value="<?=$val->id?>"><?=$val->nome?></option><?php } ?></select></div>');
+							}else{
+								$("#setor").html('');
+							}
+						}})
+					$.ajax({
+						type: "post",
+						data: "tag="+$("#tag").val(),
+						dataType: "html",
 						url: "<?=SITE?>ajax/Equip/"+$("#tag").val(), 
 						success: function(result){
 							$("#desEquip").val(result);
@@ -83,6 +102,32 @@ if(isset($view_dados)){
 				$("#forms").submit(function(event) {
 					$("#tag").removeAttr('disabled');
 				});
+				$(".carrega").click(function(){
+					tag = $(this).attr('id');
+					$("#tag").val(tag).eac
+					$(".carrega").each(function(index, al){
+						$(this).removeClass('back');
+					});
+					$(this).addClass('back')
+					$.ajax({
+						type: "post",
+						data: "tag="+tag,
+						dataType: "html",
+						url: "<?=SITE?>ajax/Equip/"+tag, 
+						success: function(result){
+							$("#desEquip").val(result);
+						}})
+				})
+				var dt = new Date();
+				var mes = (dt.getMonth()+1);
+				if((dt.getMonth()+1) < 10 ){mes = "0"+mes;}
+    			var diaAtual = dt.getFullYear() + "-" + mes + "-" + dt.getDate();	
+				$("#datahjinicio").click(function(event) {
+					$('#datainicio').val(diaAtual); //Atribui o valor do dia atual
+				});
+				$("#datahjfim").click(function(){
+					$("#datafim").val(diaAtual);
+				})
 			});
 		</script>
 		<section id="index-container">
@@ -97,120 +142,134 @@ if(isset($view_dados)){
 						<div class="panel-body">
 							<form method="post" id="forms" action="<?=SITE?>registro/salvar" enctype="multipart/form-data">
 								<fieldset><legend>EQUIPAMENTO</legend>
-									<div class="form-group">
-										<label for="tag">TAG</label>
-										<input type="text" autocomplete="off" list="tags" class="form-control" required="" id="tag" placeholder="TAG" name="tag" value="<?=$tag?>" <?=$dis?>>
-									</div>
-									<div class="form-group">
-										<label for="desEquip">Descrição do equipamento</label>
-										<textarea class="form-control" id="desEquip" name="desEquip" rows="3" placeholder="Descrição do Equipamento"><?=$desc?></textarea>
-									</div>
-									<p id="cadastrado">Caso o equipamento não esteja cadastrado ao proceguir ele sera cadastrado!</p>
-									<p id="erro0"></p>
-									<button type="button" id="pro1" class="btn btn-success btn-lg"><b>Proceguir</b></button>
-								</fieldset>
-								<fieldset style="display: none"><legend>SERVIÇO</legend>
-									<div class="radio-inline">
-										<label>
-											<input type="radio" name="tiposervico" id="optionsRadios1" value="Corretiva" checked>
-											Corretiva
-										</label>
-									</div>
-									<div class="radio-inline">
-										<label>
-											<input type="radio" name="tiposervico" id="optionsRadios2" value="Preventiva">
-											Preventiva
-										</label>
-									</div>
-									<div class="radio-inline">
-										<label>
-											<input type="radio" name="tiposervico" id="optionsRadios1" value="Melhoria">
-											Melhoria
-										</label>
-									</div>
-									<div class="radio-inline">
-										<label>
-											<input type="radio" name="tiposervico" id="optionsRadios2" value="Predial">
-											Predial
-										</label>
-									</div><br><br>
-									<label class="checkbox-inline">
-										<input type="checkbox" id="parada" name="parada" value="parada"> <b>Ocorreu parada da produção</b>
-									</label><br><br>
+									<div class="col-md-12">
+										<?php foreach(Equipamento::all() as $vall){ ?>
+											<div id="<?=$vall->tag?>" class="col-md-2 well well-sm carrega">
+												<?=$vall->tag?>
+											</div>
+											<?php } ?>
+										</div>
+										<div class="form-group">
+											<label for="tag">TAG</label>
+											<input type="text" autocomplete="off" list="tags" class="form-control" required="" id="tag" placeholder="TAG" name="tag" value="<?=$tag?>" <?=$dis?>>
+										</div>
+										<div id="setor"></div>
+										<div class="form-group">
+											<label for="desEquip">Descrição do equipamento</label>
+											<textarea class="form-control" id="desEquip" name="desEquip" rows="3" placeholder="Descrição do Equipamento"><?=$desc?></textarea>
+										</div>
+										<p id="cadastrado">Caso o equipamento não esteja cadastrado ao proceguir ele sera cadastrado!</p>
+										<p id="erro0"></p>
+										<button type="button" id="pro1" class="btn btn-success btn-lg"><b>Proceguir</b></button>
+									</fieldset>
+									<fieldset style="display: none"><legend>SERVIÇO</legend>
+										<div class="radio-inline">
+											<label>
+												<input type="radio" name="tiposervico" id="optionsRadios1" value="Corretiva" checked>
+												Corretiva
+											</label>
+										</div>
+										<div class="radio-inline">
+											<label>
+												<input type="radio" name="tiposervico" id="optionsRadios2" value="Preventiva">
+												Preventiva
+											</label>
+										</div>
+										<div class="radio-inline">
+											<label>
+												<input type="radio" name="tiposervico" id="optionsRadios1" value="Melhoria">
+												Melhoria
+											</label>
+										</div>
+										<div class="radio-inline">
+											<label>
+												<input type="radio" name="tiposervico" id="optionsRadios2" value="Predial">
+												Predial
+											</label>
+										</div><br><br>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="parada" name="parada" value="parada"> <b>Ocorreu parada da produção</b>
+										</label><br><br>
 
-									<label for="desServico">Descrição do serviço</label>
-									<textarea class="form-control" id="desServico" name="desServico" rows="3" placeholder="Descrição do servço"></textarea><br>
-									<div class="form-group">
-										<label for="datainicio">Data de inicio</label>
-										<input type="date" class="form-control" required="" id="datainicio" name="datainicio">
-									</div>
-									<div class="form-group">
-										<label for="horainicio">Horario do inicio</label>
-										<input type="time" class="form-control" required="" id="horainicio" name="horainicio">
-									</div>
-									<div class="form-group">
+										<label for="desServico">Descrição do serviço</label>
+										<textarea class="form-control" id="desServico" name="desServico" rows="3" placeholder="Descrição do servço"></textarea><br>
+											<label for="datainicio">Data de inicio</label>
+										<div class="input-group">
+											<input type="date" class="form-control" required="" id="datainicio" name="datainicio">
+											<span class="input-group-btn">
+												<button class="btn btn-default" type="button" id="datahjinicio">Hoje</button>
+											</span>
+										</div>
+										<div class="form-group">
+											<label for="horainicio">Horario do inicio</label>
+											<input type="time" class="form-control" required="" id="horainicio" name="horainicio">
+										</div>
 										<label for="datafim">Data do fim da ocorrencia</label>
-										<input type="date" class="form-control" required="" id="datafim" name="datafim">
+										<div class="input-group">
+											<input type="date" class="form-control" required="" id="datafim" name="datafim">
+											<span class="input-group-btn">
+												<button class="btn btn-default" type="button" id="datahjfim">Hoje</button>
+											</span>
+										</div>
+										<div class="form-group">
+											<label for="horafim">Horario do fim da ocorrencia</label>
+											<input type="time" class="form-control" required="" id="horafim" name="horafim">
+										</div>
+										<p id="erro1"></p>
+										<button type="button" class="btn btn-danger" id="volta3" value="3">
+											<span class="fa fa-arrow-left" aria-hidden="true"></span> Voltar
+										</button>
+										<button type="button" id="pro2" class="btn btn-success btn-lg"><b>Proceguir</b></button>
+									</fieldset>
+									<fieldset style="display: none"><legend>PEÇAS UTILIZADAS</legend>
+										<div class="form-group form-inline">
+											<label>Peça: </label>
+											<input type="text" class="form-control" placeholder="Peça" name="peca1">
+											<label>Quantidade: </label>
+											<input type="number" class="form-control" placeholder="Quantidade" name="qnt1">
+										</div>
+										<div class="form-group form-inline">
+											<label>Peça: </label>
+											<input type="text" class="form-control" placeholder="Peça" name="peca2">
+											<label>Quantidade: </label>
+											<input type="number" class="form-control" placeholder="Quantidade" name="qnt2">
+										</div>
+										<div id="addPeca"></div>
+										<button type="button" class="btn btn-primary" id="btnAddPeca" value="3">
+											<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar peça
+										</button><br><br>
+										<button type="button" class="btn btn-danger" id="volta2" value="3">
+											<span class="fa fa-arrow-left" aria-hidden="true"></span> Voltar
+										</button>
+										<button type="button" id="pro3" class="btn btn-success btn-lg"><b>Proceguir</b></button>
+									</fieldset>
+									<fieldset style="display: none"><legend>EXECUTANTE</legend>
+										<label>Nome: </label>
+										<select name="nome1" required="" class="form-control">
+											<option value="" disabled="" selected="">Selecione....</option>
+											<?php foreach(Mecanico::all() as $val){ ?>
+												<option value="<?=$val->id?>"><?=$val->inscricao?>/<?=$val->nome?></option>
+												<?php } ?>
+											</select>
+											<label>Nome: </label>
+											<select name="nome2" class="form-control">
+												<option value="" disabled="" selected="">Selecione....</option>
+												<?php foreach(Mecanico::all() as $val){ ?>
+													<option value="<?=$val->id?>"><?=$val->inscricao?>/<?=$val->nome?></option>
+													<?php } ?>
+												</select>
+												<div id="addMec"></div>
+												<button type="button" class="btn btn-primary" id="btnAddMec" value="3">
+													<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Execultante
+												</button><br><br>
+												<button type="button" class="btn btn-danger" id="volta1" value="3">
+													<span class="fa fa-arrow-left" aria-hidden="true"></span> Voltar
+												</button><br><br>
+												<button type="submit" class="btn btn-success form-control">Salvar</button>
+											</fieldset><br><br>
+										</form>
 									</div>
-									<div class="form-group">
-										<label for="horafim">Horario do fim da ocorrencia</label>
-										<input type="time" class="form-control" required="" id="horafim" name="horafim">
-									</div>
-									<p id="erro1"></p>
-									<button type="button" class="btn btn-danger" id="volta3" value="3">
-										<span class="fa fa-arrow-left" aria-hidden="true"></span> Voltar
-									</button>
-									<button type="button" id="pro2" class="btn btn-success btn-lg"><b>Proceguir</b></button>
-								</fieldset>
-								<fieldset style="display: none"><legend>PEÇAS UTILIZADAS</legend>
-									<div class="form-group form-inline">
-										<label>Peça: </label>
-										<input type="text" class="form-control" placeholder="Peça" name="peca1">
-										<label>Quantidade: </label>
-										<input type="number" class="form-control" placeholder="Quantidade" name="qnt1">
-									</div>
-									<div class="form-group form-inline">
-										<label>Peça: </label>
-										<input type="text" class="form-control" placeholder="Peça" name="peca2">
-										<label>Quantidade: </label>
-										<input type="number" class="form-control" placeholder="Quantidade" name="qnt2">
-									</div>
-									<div id="addPeca"></div>
-									<button type="button" class="btn btn-primary" id="btnAddPeca" value="3">
-										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar peça
-									</button><br><br>
-									<button type="button" class="btn btn-danger" id="volta2" value="3">
-										<span class="fa fa-arrow-left" aria-hidden="true"></span> Voltar
-									</button>
-									<button type="button" id="pro3" class="btn btn-success btn-lg"><b>Proceguir</b></button>
-								</fieldset>
-								<fieldset style="display: none"><legend>EXECUTANTE</legend>
-									<label>Nome: </label>
-									<select name="nome1" required="" class="form-control">
-										<option value="" disabled="" selected="">Selecione....</option>
-										<?php foreach(Mecanico::all() as $val){ ?>
-										<option value="<?=$val->id?>"><?=$val->inscricao?>/<?=$val->nome?></option>
-										<?php } ?>
-									</select>
-									<label>Nome: </label>
-									<select name="nome2" class="form-control">
-										<option value="" disabled="" selected="">Selecione....</option>
-										<?php foreach(Mecanico::all() as $val){ ?>
-										<option value="<?=$val->id?>"><?=$val->inscricao?>/<?=$val->nome?></option>
-										<?php } ?>
-									</select>
-									<div id="addMec"></div>
-									<button type="button" class="btn btn-primary" id="btnAddMec" value="3">
-										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar Execultante
-									</button><br><br>
-									<button type="button" class="btn btn-danger" id="volta1" value="3">
-										<span class="fa fa-arrow-left" aria-hidden="true"></span> Voltar
-									</button><br><br>
-									<button type="submit" class="btn btn-success form-control">Salvar</button>
-								</fieldset><br><br>
-							</form>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+					</section>

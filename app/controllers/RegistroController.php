@@ -42,6 +42,9 @@ Class RegistroController extends Controller{
 					$sair=false;
 				}
 			}$sair=true;$i=1;
+			if(isset($_REQUEST['terceiro'])){
+				Terceiro::create(array("empresa"=>$_REQUEST["empresaTerceiro"],"descricao"=>$_REQUEST['desServicoTerceiro'],"valor"=>$_REQUEST["valorTerceiro"],'registro_id'=>Registro::last()->id));
+			}
 			while($sair == true){
 				if(isset($_REQUEST["nome".$i])){
 					if(!empty(Mecanico::find($_REQUEST['nome'.$i]))){

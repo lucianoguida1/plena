@@ -7,7 +7,7 @@
 		 */
 		static $belongs_to = array(
 			array('user'),
-			array('equipamento')
+			array('equipamento'),
 		);
 
 		/**
@@ -17,7 +17,8 @@
 		static $has_many = array(
 		 	array('pecas'),
 		 	array('operantes'),
-		 	array('users', 'through' => 'payments')
+		 	array('users', 'through' => 'payments'),
+		 	array('terceiros')
 		);
 
 	}

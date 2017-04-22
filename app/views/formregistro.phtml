@@ -102,6 +102,14 @@ if(isset($view_dados)){
 				$("#forms").submit(function(event) {
 					$("#tag").removeAttr('disabled');
 				});
+				$("#terceiro").html("");
+				$("#terceiro").click(function(){
+					if($("#terceiro").is(':checked')){
+						$("#formterceiro").html('<div class="form-group"><label>Nome da empresa</label><input type="text" class="form-control" required="" id="empresaTerceiro" name="empresaTerceiro" placeholder="Nome da empresa"></div><label for="desServicoTerceiro">Descrição do serviço prestado</label><textarea class="form-control" id="desServicoTerceiro" name="desServicoTerceiro" rows="3" placeholder="Descrição do serviço prestado"></textarea><br><div class="form-group"><label>Valor do serviço (opicional)</label><input type="number" class="form-control" required="" id="valorTerceiro" name="valorTerceiro" placeholder="Valor"></div>');
+					}else{
+						$("#formterceiro").html("");
+					}
+				})
 				$(".carrega").click(function(){
 					tag = $(this).attr('id');
 					$("#tag").val(tag).eac
@@ -188,9 +196,9 @@ if(isset($view_dados)){
 											</label>
 										</div><br><br>
 										<label class="checkbox-inline">
-											<input type="checkbox" id="parada" name="parada" value="parada"> <b>Ocorreu parada da produção</b>
+											<input type="checkbox" id="parada" name="parada" value="Ocorreu parada da produção"> <b>Ocorreu parada da produção</b>
 										</label><br><br>
-
+										
 										<label for="desServico">Descrição do serviço</label>
 										<textarea class="form-control" id="desServico" name="desServico" rows="3" placeholder="Descrição do servço"></textarea><br>
 											<label for="datainicio">Data de inicio</label>
@@ -214,6 +222,12 @@ if(isset($view_dados)){
 										<div class="form-group">
 											<label for="horafim">Horario do fim da ocorrencia</label>
 											<input type="time" class="form-control" required="" id="horafim" name="horafim">
+										</div>
+										<label class="checkbox-inline">
+											<input type="checkbox" id="terceiro" name="terceiro" value="terceiro"> <b>Foi necessario serviços de terceiros.</b>
+										</label><br><br>
+										<div id="formterceiro">
+											
 										</div>
 										<p id="erro1"></p>
 										<button type="button" class="btn btn-danger" id="volta3" value="3">

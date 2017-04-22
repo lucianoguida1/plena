@@ -7,6 +7,7 @@
 			});
 			$(this).addClass('active');
 			$("#"+$(this).attr("role")).show();
+			return false;
 		});
 		$("#pesquisa").keyup(function(){
 			var pesquisa = $(this).val()
@@ -63,11 +64,12 @@
 			<div class="col-md-3">
 				<div class="well well-sm aqui">
 					<h4><b><?=$val->equipamento->tag?></b></h4>
-					<p><?=$val->descricao_servico?></p>
+					<p><?=substr($val->descricao_servico, 0,50)?>...</p>
 					<p><?=$val->data->format('d/m/Y')?></p>
 					<?php foreach($val->operantes as $mac){ ?>
 					<p><b>Mecânico:</b> <?=$mac->mecanico->nome?></p>
 					<?php } ?>
+					<h2 class="label label-danger"><?=$val->parada?></h2>
 					<p><a class="btn btn-primary form-control" href="<?=SITE?>visualizar/view/<?=$val->id?>" role="button">Visualizar</a></p>
 				</div>
 			</div>
@@ -83,6 +85,7 @@
 						<?php foreach($val->operantes as $mac){ ?>
 						<p><b>Mecânico:</b> <?=$mac->mecanico->nome?></p>
 						<?php } ?>
+						<h2 class="label label-danger"><?=$val->parada?></h2>
 						<p><a class="btn btn-primary form-control" href="<?=SITE?>visualizar/view/<?=$val->id?>" role="button">Visualizar</a></p>
 					</div>
 				</div>
@@ -98,6 +101,7 @@
 							<?php foreach($val->operantes as $mac){ ?>
 							<p><b>Mecânico:</b> <?=$mac->mecanico->nome?></p>
 							<?php } ?>
+							<h2 class="label label-danger"><?=$val->parada?></h2>
 							<p><a class="btn btn-primary form-control" href="<?=SITE?>visualizar/view/<?=$val->id?>" role="button">Visualizar</a></p>
 						</div>
 					</div>

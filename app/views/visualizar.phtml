@@ -1,4 +1,16 @@
-<?php $dias = $view_registro->soma_dias >0?$view_registro->soma_dias." Dias e ":"";$n="";?>
+<?php 
+$dias = $view_registro->soma_dias >0?$view_registro->soma_dias." Dias e ":"";$n="";
+//var_dump(($view_registro->terceiros[0]));
+if(isset($view_registro->terceiros[0])){
+$terceiro = '<div class="well">
+		<h4>Serviço de terceiros: '.$view_registro->terceiros[0]->empresa.'</h4>
+		<h4>Descrição do serviço: '.$view_registro->terceiros[0]->descricao.'</h4>
+		<h4>Valor do serviço: R$ '.$view_registro->terceiros[0]->valor.'</h4>
+		</div>';
+}else{
+	$terceiro ='';
+}
+?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -14,7 +26,7 @@
 				'width': 170,
 				'elementHandlers': specialElementHandlers
 			});
-			doc.save('exemplo-pdf.pdf');
+			doc.save('<?=$view_equipamento->tag."-".$view_registro->id?>.pdf');
 		});
 	});
 </script>
@@ -42,18 +54,19 @@
 </div>
 <div class="col-md-9 well">
 	<fieldset>
-		<legend><?=$view_registro->tipo_servico?><br><small>Registro: <?=$view_registro->data->format('Y/m/d H:i:s')?></small></legend>
-		<h3>Equipamento: <?=$view_equipamento->tag?></h3>
+		<legend><span class="label label-danger"><?=$view_registro->parada?></span><br>Manutenção <?=$view_registro->tipo_servico?><br><small>Registro: <?=$view_registro->data->format('Y/m/d H:i:s')?></small></legend>
+		<h4>Equipamento: <?=$view_equipamento->tag?></h4>
 		<!--<p><?=$view_equipamento->descricao?></p>-->
-		<h4><?=$view_registro->descricao_servico?></h4>
-		<p>Inicio: <?=explode('-',$view_registro->data_inicio)[2]?>/<?=explode('-',$view_registro->data_inicio)[1]?>/<?=explode('-',$view_registro->data_inicio)[0]?> as <?=$view_registro->hora_inicio?></p>
-		<p>Fim: <?=explode('-',$view_registro->data_termino)[2]?>/<?=explode('-',$view_registro->data_termino)[1]?>/<?=explode('-',$view_registro->data_termino)[0]?> as <?=$view_registro->hora_termino?></p>
+		<h4>Serviço realizado: <?=$view_registro->descricao_servico?></h4>
+		<?=$terceiro?>
+		<p>Inicio: <?=explode('-',$view_registro->data_inicio)[2]?>/<?=explode('-',$view_registro->data_inicio)[1]?>/<?=explode('-',$view_registro->data_inicio)[0]?> as <?=$view_registro->hora_inicio?>
+		  <br>Fim: <?=explode('-',$view_registro->data_termino)[2]?>/<?=explode('-',$view_registro->data_termino)[1]?>/<?=explode('-',$view_registro->data_termino)[0]?> as <?=$view_registro->hora_termino?></p>
 		<p>Seviço demorou <?=$dias?><?=$view_registro->soma_horas." Horas."?></p>
-		<div class="col-md-6">
+		<div class="col-md-4 col-md-offset-1 well well-sm">
 			<h4>Pecas utilizadas:</h4>
 			<p><?php foreach($view_pecas as $val){ echo $val->quantidade." ".$val->peca.", ";}?></p>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-4 col-md-offset-1 well well-sm">
 			<h4>Operantes:</h4>
 			<p><?php foreach($view_operantes as $val){ echo $val->mecanico->nome.", ";}?></p>
 		</div>

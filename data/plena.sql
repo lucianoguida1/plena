@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 08-Abr-2017 às 01:40
+-- Generation Time: 01-Maio-2017 às 21:56
 -- Versão do servidor: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -16,7 +16,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
+-- 
 -- Database: `plena`
 --
 CREATE DATABASE IF NOT EXISTS `plena` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
@@ -32,6 +32,7 @@ CREATE TABLE `equipamentos` (
   `id` int(11) NOT NULL,
   `tag` varchar(45) NOT NULL,
   `descricao` longtext NOT NULL,
+  `status` int(2) NOT NULL DEFAULT '1',
   `setor_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -39,13 +40,16 @@ CREATE TABLE `equipamentos` (
 -- Extraindo dados da tabela `equipamentos`
 --
 
-INSERT INTO `equipamentos` (`id`, `tag`, `descricao`, `setor_id`) VALUES
-(2, '#guida', 'Teste', 0),
-(8, 'Motor', 'Motor', 0),
-(9, 'Furadeira', 'Furedeira de preção', 0),
-(10, 'Caldeira', 'Caldas quente', 0),
-(11, 'Asperção', 'Joga agua', 0),
-(17, 'Bomba d\'gua', 'Bomba da represa', 0);
+INSERT INTO `equipamentos` (`id`, `tag`, `descricao`, `status`, `setor_id`) VALUES
+(2, '#guida', 'Teste', 1, 2),
+(8, 'Motor', 'Motor', 1, 3),
+(9, 'Furadeira', 'Furedeira de preção', 1, 3),
+(10, 'Caldeira', 'Caldas quente', 1, 2),
+(11, 'Asperção', 'Joga agua', 1, 3),
+(17, 'Bomba d\'gua', 'Bomba da represa', 1, 2),
+(18, 'gggg', 'gg', 1, 2),
+(19, 'Furadeiraa', 'asdda', 1, 2),
+(20, 'Saymon', 'Dança muito bem', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -120,7 +124,15 @@ INSERT INTO `operantes` (`id`, `mecanico_id`, `registro_id`) VALUES
 (6, 2, 19),
 (7, 1, 21),
 (8, 1, 22),
-(9, 2, 22);
+(9, 2, 22),
+(10, 1, 23),
+(11, 1, 24),
+(12, 2, 24),
+(13, 1, 25),
+(14, 1, 26),
+(15, 1, 27),
+(16, 2, 27),
+(17, 1, 28);
 
 -- --------------------------------------------------------
 
@@ -150,7 +162,14 @@ INSERT INTO `pecas` (`id`, `peca`, `quantidade`, `registro_id`) VALUES
 (38839, 'Limpa Contato', 1, 19),
 (38842, 'qwe', 12, 21),
 (38843, '312', 333, 21),
-(38844, 'Limpa Contato', 5, 22);
+(38844, 'Limpa Contato', 5, 22),
+(38845, 'fri', 2, 23),
+(38846, '222', 22, 24),
+(38847, '22', 22, 24),
+(38848, 'Limpa Contato', 2, 25),
+(38849, 'Limpa Contato', 22, 26),
+(38850, 'Dança', 1, 27),
+(38851, 'Limpa Contato', 2, 28);
 
 -- --------------------------------------------------------
 
@@ -165,10 +184,12 @@ CREATE TABLE `registros` (
   `data_inicio` varchar(45) NOT NULL,
   `hora_inicio` varchar(45) NOT NULL,
   `data_termino` varchar(45) NOT NULL,
+  `conserto_inicio` varchar(45) NOT NULL,
+  `hora_inicio_conserto` varchar(45) NOT NULL,
   `hora_termino` varchar(45) NOT NULL,
   `soma_dias` varchar(45) NOT NULL,
   `soma_horas` varchar(45) NOT NULL,
-  `parada` varchar(45) NOT NULL,
+  `parada` varchar(45) DEFAULT NULL,
   `causas` varchar(45) DEFAULT NULL,
   `horas_parada` varchar(45) DEFAULT NULL,
   `data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -181,14 +202,20 @@ CREATE TABLE `registros` (
 -- Extraindo dados da tabela `registros`
 --
 
-INSERT INTO `registros` (`id`, `tipo_servico`, `descricao_servico`, `data_inicio`, `hora_inicio`, `data_termino`, `hora_termino`, `soma_dias`, `soma_horas`, `parada`, `causas`, `horas_parada`, `data`, `status`, `equipamento_id`, `user_id`) VALUES
-(15, 'Corretiva', '123', '0123-03-12', '12:23', '0123-03-12', '12:03', '0', '0', '', NULL, NULL, '2017-03-25 18:24:06', 1, 2, 8),
-(16, 'Corretiva', '123', '0123-03-12', '12:23', '0123-03-12', '12:03', '0', '0', '', NULL, NULL, '2017-03-05 18:27:23', 1, 2, 8),
-(17, 'Melhoria', 'Fizemos update na estrutura do equipamento para que o colaborador trabalhe com mais eficiÃªncia.', '2017-03-24', '14:00', '2017-03-25', '08:00', '2', '18', '', NULL, NULL, '2017-03-25 18:32:02', 1, 9, 8),
-(18, 'Corretiva', 'O darciel fez a limpeza na tubulaÃ§Ã£o de energia do equiapamento', '2017-03-23', '09:00', '2017-03-23', '18:00', '0', '9', 'parada', NULL, NULL, '2017-03-31 18:33:48', 1, 11, 8),
-(19, 'Corretiva', 'asd', '2222-02-22', '22:22', '2222-02-22', '22:22', '0', '0', '', NULL, NULL, '2017-01-23 17:34:10', 1, 2, 8),
-(21, 'Predial', 'asd', '2017-11-08', '11:01', '2017-03-23', '12:33', '229', '22', '', NULL, NULL, '2017-03-31 01:41:46', 1, 17, 8),
-(22, 'Corretiva', 'Foi realizado a manutenção. ', '2017-03-31', '08:00', '2017-03-31', '12:00', '0', '4', 'parada', NULL, NULL, '2017-03-31 15:57:37', 1, 8, 8);
+INSERT INTO `registros` (`id`, `tipo_servico`, `descricao_servico`, `data_inicio`, `hora_inicio`, `data_termino`, `conserto_inicio`, `hora_inicio_conserto`, `hora_termino`, `soma_dias`, `soma_horas`, `parada`, `causas`, `horas_parada`, `data`, `status`, `equipamento_id`, `user_id`) VALUES
+(15, 'Corretiva', '123', '0123-03-12', '12:23', '0123-03-12', '2017-05-01', '14:00', '12:03', '0', '0', NULL, NULL, NULL, '2017-03-25 18:24:06', 1, 2, 8),
+(16, 'Corretiva', '123', '0123-03-12', '12:23', '0123-03-12', '2017-05-01', '14:00', '12:03', '0', '0', NULL, NULL, NULL, '2017-03-05 18:27:23', 1, 2, 8),
+(17, 'Melhoria', 'Fizemos update na estrutura do equipamento para que o colaborador trabalhe com mais eficiÃªncia.', '2017-03-24', '14:00', '2017-03-25', '2017-05-01', '14:00', '08:00', '2', '18', NULL, NULL, NULL, '2017-03-25 18:32:02', 1, 9, 8),
+(18, 'Corretiva', 'O darciel fez a limpeza na tubulaÃ§Ã£o de energia do equiapamento', '2017-03-23', '09:00', '2017-03-23', '2017-05-01', '14:00', '18:00', '0', '9', 'Ocorreu parada da produção', NULL, NULL, '2017-03-31 18:33:48', 1, 11, 8),
+(19, 'Corretiva', 'asd', '2222-02-22', '22:22', '2222-02-22', '2017-05-01', '14:00', '22:22', '0', '0', NULL, NULL, NULL, '2017-01-23 17:34:10', 1, 2, 8),
+(21, 'Predial', 'asd', '2017-11-08', '11:01', '2017-03-23', '2017-05-01', '14:00', '12:33', '229', '22', NULL, NULL, NULL, '2017-03-31 01:41:46', 1, 17, 8),
+(22, 'Corretiva', 'Foi realizado a manutenção. ', '2017-03-31', '08:00', '2017-03-31', '2017-05-01', '14:00', '12:00', '0', '4', 'Ocorreu parada da produção', NULL, NULL, '2017-03-31 15:57:37', 1, 8, 8),
+(23, 'Predial', 'asdd222', '2018-02-22', '22:22', '2018-02-22', '2017-05-01', '14:00', '23:00', '0', '0', NULL, NULL, NULL, '2017-04-14 21:06:06', 1, 19, 8),
+(24, 'Corretiva', 'Manutenção mecanica', '2222-02-22', '22:22', '2222-02-22', '2017-05-01', '14:00', '22:22', '0', '0', NULL, NULL, NULL, '2017-04-14 21:06:51', 1, 8, 8),
+(25, 'Preventiva', 'Somente teste de serviço de terceiro', '2017-04-21', '11:11', '2017-04-21', '2017-05-01', '14:00', '11:11', '0', '0', 'Ocorreu parada da produção', NULL, NULL, '2017-04-21 18:05:45', 1, 2, 8),
+(26, 'Corretiva', 'ad', '2017-04-22', '10:00', '2017-04-22', '2017-05-01', '14:00', '18:00', '0', '8', 'Ocorreu parada da produção', NULL, NULL, '2017-04-22 21:00:01', 1, 8, 8),
+(27, 'Preventiva', 'Fizemos a manutenção da dança do saymon', '2017-04-26', '10:00', '2017-04-26', '2017-05-01', '14:00', '12:00', '0', '2', NULL, NULL, NULL, '2017-04-26 19:49:53', 1, 20, 8),
+(28, 'Preventiva', 'Não sei o que aconteceu so fiz meu serviço', '2017-05-01', '14:00', '2017-05-01', '2017-05-01', '14:00', '16:00', '0', '2', 'Ocorreu parada da produção', NULL, NULL, '2017-05-01 20:18:03', 1, 2, 8);
 
 -- --------------------------------------------------------
 
@@ -198,16 +225,38 @@ INSERT INTO `registros` (`id`, `tipo_servico`, `descricao_servico`, `data_inicio
 
 CREATE TABLE `setors` (
   `id` int(11) NOT NULL,
-  `nome` varchar(45) NOT NULL
+  `nome` varchar(45) NOT NULL,
+  `status` int(2) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `setors`
 --
 
-INSERT INTO `setors` (`id`, `nome`) VALUES
-(2, 'Mecânica '),
-(3, 'T.I.');
+INSERT INTO `setors` (`id`, `nome`, `status`) VALUES
+(2, 'Mecânica', 2),
+(3, 'T.I.', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `terceiros`
+--
+
+CREATE TABLE `terceiros` (
+  `id` int(11) NOT NULL,
+  `empresa` varchar(255) NOT NULL,
+  `descricao` longtext NOT NULL,
+  `valor` float NOT NULL DEFAULT '0',
+  `registro_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `terceiros`
+--
+
+INSERT INTO `terceiros` (`id`, `empresa`, `descricao`, `valor`, `registro_id`) VALUES
+(1, 'Guida', 'Manutenção no software', 20, 25);
 
 -- --------------------------------------------------------
 
@@ -231,7 +280,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `full_name`, `username`, `password`, `salt`, `role`, `status`) VALUES
 (7, '123', '123', '59def925aaec61474a670aa01e64403e5ac2b8ec96af13b075129a6346dc7312dc3bf5f24f791216279f0fccc7b7862f30e4ec0e1428b2b7707c0996407f7d2a', '3f8958e35efbcfeaedd8ac2d546bda9aba88371c9e5cbbf6de5613ea1a02868cd20936c11c9375b6d3d4f3dd84707fa6d66940054198e7524726a0a8131bbe50', 'user', 1),
-(8, 'Luciano Guida', '1213', '6e34f1f7fa6dea6c4e790b0598ba7d7b7b20a178d35db5ca59410073af100a968c74b2c35dbc9b9cd0e894eef293312a1ac41f0f297d858e7e3ad72c96c1bf15', 'e5a9ff1e16892909beb8c38b55eb2f6358f7140d8bb146724c0c6a391d6899eaa8d2d45975bfe561a02b21b7e1275ebfc5ac2aa3945e6db0ed32a18c9a10fb86', 'user', 1);
+(8, 'Luciano Guida', '1213', '9bcf1f4b88fdf082c7b9a0473f08e13b478c42f19f2d56b6dd1a1fcd46a7fe9bf424a8f34695c8df91d49487d46b2c548bc23f17d5aaab0ddea93c2cf051f7e5', '2f47ba304ddca199f991c80e265bdce70d7d40e20a4676dbb0595ba126403775ca4a58c431f09c9d7c8a790db8488a4f5fdd8edb01c002f7766393bab84e516b', 'user', 1);
 
 --
 -- Indexes for dumped tables
@@ -294,6 +343,13 @@ ALTER TABLE `setors`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `terceiros`
+--
+ALTER TABLE `terceiros`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `terceiro_fk_registro_idx` (`registro_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -307,7 +363,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `equipamentos`
 --
 ALTER TABLE `equipamentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `login_attempts`
 --
@@ -327,22 +383,27 @@ ALTER TABLE `mecanicos`
 -- AUTO_INCREMENT for table `operantes`
 --
 ALTER TABLE `operantes`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `pecas`
 --
 ALTER TABLE `pecas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38845;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38852;
 --
 -- AUTO_INCREMENT for table `registros`
 --
 ALTER TABLE `registros`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `setors`
 --
 ALTER TABLE `setors`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `terceiros`
+--
+ALTER TABLE `terceiros`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `users`
 --
@@ -377,6 +438,12 @@ ALTER TABLE `pecas`
 ALTER TABLE `registros`
   ADD CONSTRAINT `fk_registros_equipamentos1` FOREIGN KEY (`equipamento_id`) REFERENCES `equipamentos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_registros_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `terceiros`
+--
+ALTER TABLE `terceiros`
+  ADD CONSTRAINT `terceiro_fk_registro` FOREIGN KEY (`registro_id`) REFERENCES `registros` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -26,6 +26,12 @@ if(isset($view_dados)){
 		</datalist>
 		<script type="text/javascript">
 			$(document).ready(function() {
+				
+		$('body').on('blur','input',function(event) {
+					if($(this).val()<0 && $(this).attr('type') == "number"){
+						$(this).val(1).focus();
+					}
+				});
 				$("#btnAddPeca").click(function(event) {
 					var i = parseInt($(this).val());
 					$("#addPeca").append('<div class="form-group form-inline"><label>Peça:</label><input type="text" class="form-control" placeholder="Peça" name="peca-'+i+'"><label> Quantidade: </label><input type="number" class="form-control"  placeholder="Quantidade" name="qnt-'+i+'"></div>');
@@ -128,10 +134,19 @@ if(isset($view_dados)){
 				})
 				var dt = new Date();
 				var mes = (dt.getMonth()+1);
+				var dia = (dt.getDate());
 				if((dt.getMonth()+1) < 10 ){mes = "0"+mes;}
-    			var diaAtual = dt.getFullYear() + "-" + mes + "-" + dt.getDate();	
+				if((dt.getDate()) < 10 ){dia = "0"+dia;}
+    			var diaAtual = dt.getFullYear() + "-" + mes + "-" + dia;	
 				$("#datahjinicio").click(function(event) {
 					$('#datainicio').val(diaAtual); //Atribui o valor do dia atual
+				});
+				$("#datahjconsertofim").click(function(){
+					$("#consertofim").val(diaAtual);
+				});
+
+				$("#datahjconserto").click(function(){
+					$("#consertoinicio").val(diaAtual);
 				});
 				$("#datahjfim").click(function(){
 					$("#datafim").val(diaAtual);
@@ -155,7 +170,7 @@ if(isset($view_dados)){
 											<div id="<?=$vall->tag?>" class="col-md-2 well well-sm carrega">
 												<?=$vall->tag?>
 											</div>
-											<?php } ?>
+										<?php } ?>
 										</div>
 										<div class="form-group">
 											<label for="tag">TAG</label>
@@ -201,16 +216,27 @@ if(isset($view_dados)){
 										
 										<label for="desServico">Descrição do serviço</label>
 										<textarea class="form-control" id="desServico" name="desServico" rows="3" placeholder="Descrição do servço"></textarea><br>
-											<label for="datainicio">Data de inicio</label>
+										<label for="datainicio">Inicio da Ocorrência</label>
 										<div class="input-group">
 											<input type="date" class="form-control" required="" id="datainicio" name="datainicio">
 											<span class="input-group-btn">
 												<button class="btn btn-default" type="button" id="datahjinicio">Hoje</button>
 											</span>
-										</div>
+										</div><br>
 										<div class="form-group">
-											<label for="horainicio">Horario do inicio</label>
+											<label for="horainicio">Horario do inicio da ocorência</label>
 											<input type="time" class="form-control" required="" id="horainicio" name="horainicio">
+										</div>
+										<label for="consertoinicio">Inicio do conserto</label>
+										<div class="input-group">
+											<input type="date" class="form-control" required="" id="consertoinicio" name="consertoinicio">
+											<span class="input-group-btn">
+												<button class="btn btn-default" type="button" id="datahjconserto">Hoje</button>
+											</span>
+										</div><br>
+										<div class="form-group">
+											<label for="horainicio">Horario do inicio do conserto</label>
+											<input type="time" class="form-control" required="" id="horainicioconserto" name="horainicioconserto">
 										</div>
 										<label for="datafim">Data do fim da ocorrencia</label>
 										<div class="input-group">

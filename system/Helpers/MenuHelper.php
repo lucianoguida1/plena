@@ -25,17 +25,17 @@
 						"Enviar registro/file-text"=>"Registro/cadastrar",
 						"Mecacinos/briefcase"=>array(
 							'Cadastrar'=>"Mecanico/cadmecanico",
-							'remover'=>"Mecanico/removermec"
+							'Remover'=>"Mecanico/removermec"
 							),
 						"Equipamentos/cogs"=>array(
 							'Todos cadastrado'=>'Equipamento/listar',
 							'Cadastrar'=>'Equipamento/cadastrar',
-							'deletar'=>'Equipamento/delete'
+							'Excluir'=>'Equipamento/delete'
 							),
 						"Setores/bookmark"=>array(
 							'Todos cadastrado'=>'Setor/',
 							'Cadastrar'=>'Setor/cadastrar',
-							'Deletar'=>'Setor/deletar',
+							'Excluir'=>'Setor/deletar',
 							'Alterar'=>'Setor/alterar'
 							),
 					);

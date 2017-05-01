@@ -3,7 +3,7 @@
 	/**
 	 * Constates para ambiente local
 	 */
-	if($_SERVER['SERVER_NAME'] === 'localhost'){
+	if($_SERVER['SERVER_NAME'] === 'localhost' || $_SERVER['SERVER_NAME'] === '192.168.0.101'){
 		$db_config=array(
 			'HOST'=>'localhost',
 			'USER'=>'root',

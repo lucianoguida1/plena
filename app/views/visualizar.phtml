@@ -22,7 +22,7 @@ $terceiro = '<div class="well">
 		};
 
 		$('#btGerarPDF').click(function () {
-			doc.fromHTML($('fieldset').html(), 15, 15, {
+			doc.fromHTML($('#pdf').html(), 15, 15, {
 				'width': 170,
 				'elementHandlers': specialElementHandlers
 			});
@@ -59,7 +59,7 @@ $terceiro = '<div class="well">
 		<!--<p><?=$view_equipamento->descricao?></p>-->
 		<h4>Serviço realizado: <?=$view_registro->descricao_servico?></h4>
 		<?=$terceiro?>
-		<p>Inicio: <?=explode('-',$view_registro->data_inicio)[2]?>/<?=explode('-',$view_registro->data_inicio)[1]?>/<?=explode('-',$view_registro->data_inicio)[0]?> as <?=$view_registro->hora_inicio?>
+		<p>Ocorrência dia: <?=explode('-',$view_registro->data_inicio)[2]?>/<?=explode('-',$view_registro->data_inicio)[1]?>/<?=explode('-',$view_registro->data_inicio)[0]?> as <?=$view_registro->hora_inicio?><br>Inicio da manutenção: <?=explode('-',$view_registro->conserto_inicio)[2]?>/<?=explode('-',$view_registro->conserto_inicio)[1]?>/<?=explode('-',$view_registro->conserto_inicio)[0]?> as <?=$view_registro->hora_inicio_conserto?>
 		  <br>Fim: <?=explode('-',$view_registro->data_termino)[2]?>/<?=explode('-',$view_registro->data_termino)[1]?>/<?=explode('-',$view_registro->data_termino)[0]?> as <?=$view_registro->hora_termino?></p>
 		<p>Seviço demorou <?=$dias?><?=$view_registro->soma_horas." Horas."?></p>
 		<div class="col-md-4 col-md-offset-1 well well-sm">
@@ -72,7 +72,32 @@ $terceiro = '<div class="well">
 		</div>
 	</fieldset>
 </div>
-
+<fieldset id="pdf" style="font-family: inherit;display: none">
+		<legend style="display: block;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 20px;
+    font-size: 21px;
+    line-height: inherit;
+    color: #333;
+    border: 0;
+    border-bottom: 1px solid #e5e5e5;"><small style="right: 0px;margin-top: -45px;font-size: 10pt;">Registro: <?=$view_registro->data->format('Y/m/d H:i:s')?></small><br><span><?=$view_registro->parada?></span><br>Manutenção: <?=$view_registro->tipo_servico?><br></legend><hr>
+		<h4>Equipamento: <?=$view_equipamento->tag?></h4>
+		<!--<p><?=$view_equipamento->descricao?></p>-->
+		<h4>Serviço realizado:</h4><p><?=$view_registro->descricao_servico?>a</p>
+		<?=$terceiro?>
+		<p>Ocorrência dia: <?=explode('-',$view_registro->data_inicio)[2]?>/<?=explode('-',$view_registro->data_inicio)[1]?>/<?=explode('-',$view_registro->data_inicio)[0]?> as <?=$view_registro->hora_inicio?><br>Inicio da manutenção: <?=explode('-',$view_registro->conserto_inicio)[2]?>/<?=explode('-',$view_registro->conserto_inicio)[1]?>/<?=explode('-',$view_registro->conserto_inicio)[0]?> as <?=$view_registro->hora_inicio_conserto?>
+		  <br>Fim: <?=explode('-',$view_registro->data_termino)[2]?>/<?=explode('-',$view_registro->data_termino)[1]?>/<?=explode('-',$view_registro->data_termino)[0]?> as <?=$view_registro->hora_termino?></p>
+		<p>Seviço demorou <?=$dias?><?=$view_registro->soma_horas." Horas."?></p>
+		<div>
+			<h4>Pecas utilizadas:</h4>
+			<p><?php foreach($view_pecas as $val){ echo $val->quantidade." ".$val->peca.", ";}?></p>
+		</div>
+		<div>
+			<h4>Operantes:</h4>
+			<p><?php foreach($view_operantes as $val){ echo $val->mecanico->nome.", ";}?></p>
+		</div>
+	</fieldset>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

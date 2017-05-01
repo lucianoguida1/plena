@@ -1,3 +1,4 @@
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(".lis>li").click(function(){
@@ -55,56 +56,81 @@
 			<li role="1" class="active"><a href="#">Todos</a></li>
 			<li role="2"><a href="#">Mais Recentes</a></li>
 			<li role="3"><a href="#">Mais Antigos</a></li>
+			<li role="4"><a href="#">Pararam a Produção</a></li>
 		</ul>
 	</div>
 </div>
 <div class="row"><br>
 	<div class="col-md-12" id="1">
-		<?php foreach(Registro::all(array("order"=>'id desc','conditions'=>'status = 1')) as $val){ ?>
-			<div class="col-md-3">
-				<div class="well well-sm aqui">
-					<h4><b><?=$val->equipamento->tag?></b></h4>
-					<p><?=substr($val->descricao_servico, 0,50)?>...</p>
-					<p><?=$val->data->format('d/m/Y')?></p>
-					<?php foreach($val->operantes as $mac){ ?>
-					<p><b>Mecânico:</b> <?=$mac->mecanico->nome?></p>
-					<?php } ?>
-					<h2 class="label label-danger"><?=$val->parada?></h2>
-					<p><a class="btn btn-primary form-control" href="<?=SITE?>visualizar/view/<?=$val->id?>" role="button">Visualizar</a></p>
-				</div>
-			</div>
-			<?php } ?>
-		</div>
-		<div class="col-md-12" id="2" style="display: none">
-			<?php foreach(Registro::all(array("order"=>'data desc','conditions'=>'status = 1')) as $val){ ?>
-				<div class="col-md-3">
-					<div class="well well-sm">
-						<h4><b><?=$val->equipamento->tag?></b></h4>
-						<p><?=$val->descricao_servico?></p>
-						<p><?=$val->data->format('d/m/Y')?></p>
-						<?php foreach($val->operantes as $mac){ ?>
-						<p><b>Mecânico:</b> <?=$mac->mecanico->nome?></p>
-						<?php } ?>
-						<h2 class="label label-danger"><?=$val->parada?></h2>
-						<p><a class="btn btn-primary form-control" href="<?=SITE?>visualizar/view/<?=$val->id?>" role="button">Visualizar</a></p>
-					</div>
-				</div>
+		<?php $i=1; foreach(Registro::all(array("order"=>'id desc','conditions'=>'status = 1')) as $val){ ?>
+		<?=$i==1?"<div class='row'>":'';?>
+		<div class="col-md-3">
+			<div class="well well-sm aqui">
+				<h4><b><?=$val->equipamento->tag?></b></h4>
+				<p><?=substr($val->descricao_servico, 0,50)?>...</p>
+				<p><?=$val->data->format('d/m/Y')?></p>
+				<?php foreach($val->operantes as $mac){ ?>
+				<p><b>Mecânico:</b> <?=$mac->mecanico->nome?></p>
 				<?php } ?>
+				<h2 class="label label-danger"><?=$val->parada?></h2>
+				<p><a class="btn btn-primary form-control" href="<?=SITE?>visualizar/view/<?=$val->id?>" role="button">Visualizar</a></p>
 			</div>
-			<div class="col-md-12" id="3" style="display: none">
-				<?php foreach(Registro::all(array("order"=>'data asc','conditions'=>'status = 1')) as $val){ ?>
-					<div class="col-md-3">
-						<div class="well well-sm">
-							<h4><b><?=$val->equipamento->tag?></b></h4>
-							<p><?=$val->descricao_servico?></p>
-							<p><?=$val->data->format('d/m/Y')?></p>
-							<?php foreach($val->operantes as $mac){ ?>
-							<p><b>Mecânico:</b> <?=$mac->mecanico->nome?></p>
-							<?php } ?>
-							<h2 class="label label-danger"><?=$val->parada?></h2>
-							<p><a class="btn btn-primary form-control" href="<?=SITE?>visualizar/view/<?=$val->id?>" role="button">Visualizar</a></p>
-						</div>
-					</div>
-					<?php } ?>
-				</div>
+		</div>
+		<?php if($i==4){echo "</div>";$i=1;}else{$i++;}?>
+		<?php } if($i<4){echo "</div>";} ?>
+	</div>
+	<div class="col-md-12" id="2" style="display: none">
+		<?php $i=1; foreach(Registro::all(array("order"=>'data desc','conditions'=>'status = 1')) as $val){ ?>
+		<?=$i==1?"<div class='row'>":'';?>
+		<div class="col-md-3">
+			<div class="well well-sm">
+				<h4><b><?=$val->equipamento->tag?></b></h4>
+				<p><?=$val->descricao_servico?></p>
+				<p><?=$val->data->format('d/m/Y')?></p>
+				<?php foreach($val->operantes as $mac){ ?>
+				<p><b>Mecânico:</b> <?=$mac->mecanico->nome?></p>
+				<?php } ?>
+				<h2 class="label label-danger"><?=$val->parada?></h2>
+				<p><a class="btn btn-primary form-control" href="<?=SITE?>visualizar/view/<?=$val->id?>" role="button">Visualizar</a></p>
 			</div>
+		</div>
+		<?php if($i==4){echo "</div>";$i=1;}else{$i++;}?>
+		<?php } if($i<4){echo "</div>";} ?>
+	</div>
+	<div class="col-md-12" id="3" style="display: none">
+		<?php $i=1; foreach(Registro::all(array("order"=>'data asc','conditions'=>'status = 1')) as $val){ ?>
+		<?=$i==1?"<div class='row'>":'';?>
+		<div class="col-md-3">
+			<div class="well well-sm">
+				<h4><b><?=$val->equipamento->tag?></b></h4>
+				<p><?=$val->descricao_servico?></p>
+				<p><?=$val->data->format('d/m/Y')?></p>
+				<?php foreach($val->operantes as $mac){ ?>
+				<p><b>Mecânico:</b> <?=$mac->mecanico->nome?></p>
+				<?php } ?>
+				<h2 class="label label-danger"><?=$val->parada?></h2>
+				<p><a class="btn btn-primary form-control" href="<?=SITE?>visualizar/view/<?=$val->id?>" role="button">Visualizar</a></p>
+			</div>
+		</div>
+		<?php if($i==4){echo "</div>";$i=1;}else{$i++;}?>
+		<?php } if($i<4){echo "</div>";} ?>
+	</div>
+	<div class="col-md-12" id="4" style="display: none;">
+		<?php $i=1; foreach(Registro::all(array("order"=>'data asc','conditions'=>array('status = ? AND parada != ?',1,'"NULL"'))) as $val){ ?>
+		<?=$i==1?"<div class='row'>":'';?>
+		<div class="col-md-3">
+			<div class="well well-sm">
+				<h4><b><?=$val->equipamento->tag?></b></h4>
+				<p><?=$val->descricao_servico?></p>
+				<p><?=$val->data->format('d/m/Y')?></p>
+				<?php foreach($val->operantes as $mac){ ?>
+				<p><b>Mecânico:</b> <?=$mac->mecanico->nome?></p>
+				<?php } ?>
+				<h2 class="label label-danger"><?=$val->parada?></h2>
+				<p><a class="btn btn-primary form-control" href="<?=SITE?>visualizar/view/<?=$val->id?>" role="button">Visualizar</a></p>
+			</div>
+		</div>
+		<?php if($i==4){echo "</div>";$i=1;}else{$i++;}?>
+		<?php } ?>
+	</div>
+</div>

@@ -27,6 +27,8 @@ Class RegistroController extends Controller{
 			"parada"=>isset($_REQUEST['parada'])?$_REQUEST['parada']:false,
 			//"causas"=>$_REQUEST[''],
 			//"horas_parada"=>$_REQUEST[''],
+			"conserto_inicio"=>$_REQUEST['consertoinicio'],
+			"hora_inicio_conserto" =>$_REQUEST['horainicioconserto'],
 			"equipamento_id"=>$equipamento->id,
 			"user_id"=>Auth::userActive()->id,
 			"status" => 1

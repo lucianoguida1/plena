@@ -1,0 +1,37 @@
+<?php $mes = array('Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Agosto','Outubro','Novembro','Novembro'); ?>
+<div class="col-md-3">
+	<div class= "list-group" > 
+		<a href="#" class="list-group-item active"> Visualizar Registro <span class="glyphicon glyphicon-search" aria-hidden= "true" ></span></a> 
+		<a href="<?=SITE?>ajax/pdfParadaMes/<?=$view_idequipamento?>/<?=$view_mes?>" target="_blank" class="list-group-item"  id="btGerarPDF"> Salvar Aquivo <span class="glyphicon glyphicon-download-alt" aria-hidden= "true" ></span></a>
+		<a href="<?=SITE.'home'?>" class="list-group-item"> Voltar <span class="glyphicon glyphicon-arrow-left" aria-hidden= "true" ></span></a>
+	</div>
+</div>
+<div class="col-md-9 well">
+	<?php foreach($view_equipamento as $val){ ?>
+	<div class="col-md-10 col-md-offset-1">
+		<fieldset><legend><?=$val->tag?></legend>
+		<p>Quantidade de horas parada no mês de <i><?=$mes[$view_mes]?></i>: <strong><?=$view_horas[$val->id]?> Horas</strong></p>
+		<p>Foram feita(s) <strong><?=$view_quantidade[$val->id]?></strong> manutenção ou melhoria no equipamento no mês de <?=$mes[$view_mes]?></p>
+		<p>Mecânicos que execultaram alguma ação no equipamento:</p>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Nome(s)</th>
+					<th>Data</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach($val->registros as $vall){ if(explode('-', $vall->data_inicio)[1] == $view_mes){ ?>
+					<tr>
+						<td><?php foreach($vall->operantes as $operante){ ?>
+							<p><?=$operante->mecanico->nome?></p>
+						<?php } ?></td>
+						<td><?=$vall->data->format('Y/m/d H:i:s')?></td>
+					</tr>
+				<?php } } ?>
+			</tbody>
+		</table>
+		</fieldset>
+	</div>
+	<?php } ?>
+</div>

@@ -18,6 +18,7 @@ Class RegistroController extends Controller{
 		$registro = array(
 			"tipo_servico"=>$_REQUEST['tiposervico'],
 			"descricao_servico"=>$_REQUEST['desServico'],
+			"motivo"=>$_REQUEST['motivo'],
 			"data_inicio"=>$_REQUEST['datainicio'],
 			"hora_inicio"=>$_REQUEST['horainicio'],
 			"data_termino"=>$_REQUEST['datafim'],
@@ -26,7 +27,7 @@ Class RegistroController extends Controller{
 			"soma_horas"=>$diff->h,
 			"parada"=>isset($_REQUEST['parada'])?$_REQUEST['parada']:false,
 			//"causas"=>$_REQUEST[''],
-			//"horas_parada"=>$_REQUEST[''],
+			"horas_parada"=>(($diff->days*24)+$diff->h),
 			"conserto_inicio"=>$_REQUEST['consertoinicio'],
 			"hora_inicio_conserto" =>$_REQUEST['horainicioconserto'],
 			"equipamento_id"=>$equipamento->id,

@@ -45,9 +45,11 @@ if(isset($view_dados)){
 				$("#pro1").click(function(event) {
 					if($("#tag").val() != ""){
 						if($("#desEquip").val() != ""){
-							$(this).parent().hide("fast");
-							$("#pro2").parent().show('fast');
-							$("#erro0").html("");
+							if($("#motivo").val() != ""){
+								$(this).parent().hide("fast");
+								$("#pro2").parent().show('fast');
+								$("#erro0").html("");
+							}else{$("#erro0").html("Preencha todos os campos!")}
 						}else{$("#erro0").html("Preencha todos os campos!")}
 					}else{$("#erro0").html("Preencha todos os campos!")}
 				});
@@ -180,8 +182,12 @@ if(isset($view_dados)){
 										<div class="form-group">
 											<label for="desEquip">Descrição do equipamento</label>
 											<textarea class="form-control" id="desEquip" name="desEquip" rows="3" placeholder="Descrição do Equipamento"><?=$desc?></textarea>
-										</div>
 										<p id="cadastrado">Caso o equipamento não esteja cadastrado ao proceguir ele sera cadastrado!</p>
+										</div>
+										<div class="form-group">
+											<label for="motivo">Motivo do serviço</label>
+											<textarea class="form-control" id="motivo" name="motivo" rows="3" placeholder="Descrição do Equipamento"><?=$desc?></textarea>
+										</div>
 										<p id="erro0"></p>
 										<button type="button" id="pro1" class="btn btn-success btn-lg"><b>Proceguir</b></button>
 									</fieldset>

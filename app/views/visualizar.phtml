@@ -13,22 +13,6 @@ $terceiro = '<div class="well">
 ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-		var doc = new jsPDF();
-		var specialElementHandlers = {
-			'#editor': function (element, renderer) {
-				return true;
-			}
-		};
-
-		$('#btGerarPDF').click(function () {
-			doc.fromHTML($('#pdf').html(), 15, 15, {
-				'width': 170,
-				'elementHandlers': specialElementHandlers
-			});
-			doc.save('<?=$view_equipamento->tag."-".$view_registro->id?>.pdf');
-		});
-	});
 </script>
 <style type="text/css">
 	small{
@@ -47,7 +31,7 @@ $terceiro = '<div class="well">
 <div class="col-md-3">
 	<div class= "list-group" > 
 		<a href="#" class="list-group-item active"> Visualizar Registro <span class="glyphicon glyphicon-search" aria-hidden= "true" ></span></a> 
-		<a href="#" class="list-group-item"  id="btGerarPDF"> Salvar Aquivo <span class="glyphicon glyphicon-download-alt" aria-hidden= "true" ></span></a> 
+		<a href="<?=SITE?>ajax/pdfRegistro/<?=$view_registro->id?>" target="_blank" class="list-group-item"  id="btGerarPDF"> Salvar Aquivo <span class="glyphicon glyphicon-download-alt" aria-hidden= "true" ></span></a> 
 		<a href="#" class="list-group-item" data-toggle="modal" data-target="#myModal"> Excluir <span class="glyphicon glyphicon-floppy-remove" aria-hidden= "true" ></span></a> 
 		<a href="<?=SITE.'home'?>" class="list-group-item"> Voltar <span class="glyphicon glyphicon-arrow-left" aria-hidden= "true" ></span></a>
 	</div>
@@ -55,9 +39,9 @@ $terceiro = '<div class="well">
 <div class="col-md-9 well">
 	<fieldset>
 		<legend><span class="label label-danger"><?=$view_registro->parada?></span><br>Manutenção <?=$view_registro->tipo_servico?><br><small>Registro: <?=$view_registro->data->format('Y/m/d H:i:s')?></small></legend>
-		<h4>Equipamento: <?=$view_equipamento->tag?></h4>
-		<!--<p><?=$view_equipamento->descricao?></p>-->
-		<h4>Serviço realizado: <?=$view_registro->descricao_servico?></h4>
+		<h4><strong>Equipamento:</strong> <?=$view_equipamento->tag?></h4>
+		<p><strong>Motivação:</strong> <?=$view_registro->motivo?></p>
+		<p><strong>Serviço realizado:</strong> <?=$view_registro->descricao_servico?></p>
 		<?=$terceiro?>
 		<p>Ocorrência dia: <?=explode('-',$view_registro->data_inicio)[2]?>/<?=explode('-',$view_registro->data_inicio)[1]?>/<?=explode('-',$view_registro->data_inicio)[0]?> as <?=$view_registro->hora_inicio?><br>Inicio da manutenção: <?=explode('-',$view_registro->conserto_inicio)[2]?>/<?=explode('-',$view_registro->conserto_inicio)[1]?>/<?=explode('-',$view_registro->conserto_inicio)[0]?> as <?=$view_registro->hora_inicio_conserto?>
 		  <br>Fim: <?=explode('-',$view_registro->data_termino)[2]?>/<?=explode('-',$view_registro->data_termino)[1]?>/<?=explode('-',$view_registro->data_termino)[0]?> as <?=$view_registro->hora_termino?></p>

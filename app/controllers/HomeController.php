@@ -12,6 +12,6 @@
 					$data['message']=array('success','Registro excluido com sucesso!');
 				}
 			}else{$data=null;}
-			$this->view('Home',$data);
+			$this->view('Home',$data,true);
 		}
 	}

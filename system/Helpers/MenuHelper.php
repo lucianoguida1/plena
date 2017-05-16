@@ -23,6 +23,10 @@
 					$menu=array(
 						"Inicio/home"=>"Home",
 						"Enviar registro/file-text"=>"Registro/cadastrar",
+						"Relatorios/briefcase"=>array(
+							'Por Equipamento'=>"visualizar/paradaMes/".Registro::last()->equipamento_id."/".intval(date('m'))."/".intval(date('Y')),
+							'Por Mês'=>"visualizar/paradaMesAll/".intval(date('m'))."/".intval(date('Y'))
+							),
 						"Mecacinos/briefcase"=>array(
 							'Cadastrar'=>"Mecanico/cadmecanico",
 							'Remover'=>"Mecanico/removermec"

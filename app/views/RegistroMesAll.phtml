@@ -1,0 +1,79 @@
+<?php $mes = array('Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Agosto','Outubro','Novembro','Novembro'); ?>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#geraRelatorio").click(function(){
+			if($("#mes").val()!=null){
+				window.location.href= "<?=SITE?>visualizar/paradaMesAll/"+$("#mes").val()+"/"+$("#ano").val();
+			}
+		});
+	});
+</script>
+<div class="col-md-3">
+	<div class= "list-group" > 
+		<a href="#" class="list-group-item active"> Visualizar Registro <span class="glyphicon glyphicon-search" aria-hidden= "true" ></span></a> 
+		<a href="<?=SITE?>ajax/ParadaMesAll/<?=$view_mes?>/<?=$view_ano?>" target="_blank" class="list-group-item"  id="btGerarPDF"> Salvar Aquivo <span class="glyphicon glyphicon-download-alt" aria-hidden= "true" ></span></a>
+		<a href="<?=SITE.'home'?>" class="list-group-item"> Voltar <span class="glyphicon glyphicon-arrow-left" aria-hidden= "true" ></span></a>
+	</div>
+</div>
+<div class="col-md-3"></div>
+<div class="col-md-9">
+	<div class="panel panel-primary">
+		<div class="panel-body form-inline">
+
+			<div class="form-group">
+				<label for="mes">Mês</label>
+				<select type="text" class="form-control" id="mes">
+					<option value="" selected="" disabled="">Selecione...</option>
+					<?php foreach($mes as $key => $val){?>
+					<option value="<?=$key+1?>"><?=$val?></option>
+					<?php } ?>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="ano">Ano</label>
+				<select type="text" class="form-control" id="ano">
+					<?php for($i=(int)date('Y');$i>=(int)(date('Y')-40);$i--){?>
+					<option value="<?=$i?>"><?=$i?></option>
+					<?php } ?>
+				</select>
+			</div>
+			<button type="submit" id="geraRelatorio" class="btn btn-primary">Gerar Relatorio</button>
+		</div>
+	</div>
+</div>
+	<div class="col-md-9 well">
+		<?php if(empty($view_equipamento)){?>
+		<h3>Nenhum registro encontrado nesse mês.</h3>
+		<?php }else{ ?>
+		<?php foreach($view_equipamento as $val){ ?>
+		<div class="col-md-10 col-md-offset-1">
+			<fieldset><legend><strong><?=$val->tag?></strong></legend>
+				<p>Quantidade de horas parada no mês de <i><?=$mes[$view_mes]?></i>: <strong><?=$view_horas[$val->id]?> Horas</strong></p>
+				<?php if($view_horaParada[$val->id] != 0){ ?> <p class="bg-danger" style="color: white;padding: 3px">Quantidade de horas que a produção ficou parada no mês de <i><?=$mes[$view_mes]?></i>: <strong><?=$view_horaParada[$val->id]?> Horas</strong></p> <?php } ?>
+				<p>Foram feita(s) <strong><?=$view_quantidade[$val->id]?></strong> manutenção ou melhoria no equipamento no mês de <?=$mes[$view_mes]?></p>
+				<p>Mecânicos que execultaram alguma ação no equipamento:</p>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Nome(s)</th>
+							<th>Data do registro</th>
+							<th>Visualizar Relatorio</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach($val->registros as $vall){ if(explode('-', $vall->data_inicio)[1] == $view_mes){ ?>
+						<tr>
+							<td><?php foreach($vall->operantes as $operante){ ?>
+								<p><?=$operante->mecanico->nome?></p>
+								<?php } ?></td>
+								<td><?=$vall->data->format('d/m/Y H:i:s')?></td>
+								<td><a class="btn btn-primary" href="<?=SITE?>visualizar/view/<?=$vall->id?>">Visualizar</a></td>
+							</tr>
+							<?php } } ?>
+						</tbody>
+					</table>
+				</fieldset>
+			</div>
+			<?php } } ?>
+		</div>

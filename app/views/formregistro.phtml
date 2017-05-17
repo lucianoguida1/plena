@@ -26,8 +26,7 @@ if(isset($view_dados)){
 		</datalist>
 		<script type="text/javascript">
 			$(document).ready(function() {
-				
-		$('body').on('blur','input',function(event) {
+				$('body').on('blur','input',function(event) {
 					if($(this).val()<0 && $(this).attr('type') == "number"){
 						$(this).val(1).focus();
 					}
@@ -59,9 +58,28 @@ if(isset($view_dados)){
 							if($("#horainicio").val() != ""){
 								if($("#datafim").val() != ""){
 									if($("#horafim").val() != ""){
-										$(this).parent().hide("fast");
-										$("#pro3").parent().show('fast');
-										$("#erro1").html("");
+										var startDt=document.getElementById("datainicio").value;
+										var endDt=document.getElementById("consertoinicio").value;
+										if( (new Date(startDt).getTime() <= new Date(endDt).getTime())){
+											if((new Date(startDt).getTime() == new Date(endDt).getTime()) && (new Date("2017-05-17 "+$("#horainicio").val()).getTime()) > (new Date("2017-05-17 "+$("#horainicioconserto").val()).getTime()) ){
+												$("#erroHora1").html("A hora do inicio do concerto e inferiro a hora de inicio da ocorência!");
+											}else{
+												var endDt=document.getElementById("datafim").value;
+												if( (new Date(startDt).getTime() <= new Date(endDt).getTime())){
+													if((new Date(startDt).getTime() == new Date(endDt).getTime()) && (new Date("2017-05-17 "+$("#horainicio").val()).getTime()) > (new Date("2017-05-17 "+$("#horafim").val()).getTime()) ){
+														$("#erroHora2").html("A hora do fim da ocorência e inferiro a hora de inicio da ocorência!");
+													}else{
+														$(this).parent().hide("fast");
+														$("#pro3").parent().show('fast');
+														$("#erro1").html("");
+														$("#erroData2").html("");
+														$("#erroData1").html("");
+														$("#erroHora1").html("");
+														$("#erroHora1").html("");
+													}
+												}else{$("#erroData2").html("A data do fim da ocorência não pode ser inferiro a data de inicio da ocorência!");$("#datafim").focus();}
+											}
+										}else{$("#erroData1").html("A data de inicio do concerto não pode ser inferiro a data de inicio da ocorência!");$("#consertoinicio").focus();}
 									}else{$("#erro1").html("Preencha todos os campos!")}
 								}else{$("#erro1").html("Preencha todos os campos!")}
 							}else{$("#erro1").html("Preencha todos os campos!")}
@@ -139,7 +157,7 @@ if(isset($view_dados)){
 				var dia = (dt.getDate());
 				if((dt.getMonth()+1) < 10 ){mes = "0"+mes;}
 				if((dt.getDate()) < 10 ){dia = "0"+dia;}
-    			var diaAtual = dt.getFullYear() + "-" + mes + "-" + dia;	
+				var diaAtual = dt.getFullYear() + "-" + mes + "-" + dia;	
 				$("#datahjinicio").click(function(event) {
 					$('#datainicio').val(diaAtual); //Atribui o valor do dia atual
 				});
@@ -157,7 +175,7 @@ if(isset($view_dados)){
 		</script>
 		<section id="index-container">
 			<div class="row">
-				<div class="col-md-8 col-md-offset-2" id="index-wrapper">
+				<div class="col-md-10 col-md-offset-1" id="index-wrapper">
 					<div class="panel panel-primary animated flipInY">
 						<div class="panel-heading">
 							<h3 class="panel-title text-center">     
@@ -172,7 +190,7 @@ if(isset($view_dados)){
 											<div id="<?=$vall->tag?>" class="col-md-2 well well-sm carrega">
 												<?=$vall->tag?>
 											</div>
-										<?php } ?>
+											<?php } ?>
 										</div>
 										<div class="form-group">
 											<label for="tag">TAG</label>
@@ -182,7 +200,7 @@ if(isset($view_dados)){
 										<div class="form-group">
 											<label for="desEquip">Descrição do equipamento</label>
 											<textarea class="form-control" id="desEquip" name="desEquip" rows="3" placeholder="Descrição do Equipamento"><?=$desc?></textarea>
-										<p id="cadastrado">Caso o equipamento não esteja cadastrado ao proceguir ele sera cadastrado!</p>
+											<p id="cadastrado">Caso o equipamento não esteja cadastrado ao proceguir ele sera cadastrado!</p>
 										</div>
 										<div class="form-group">
 											<label for="motivo">Motivo do serviço</label>
@@ -239,22 +257,22 @@ if(isset($view_dados)){
 											<span class="input-group-btn">
 												<button class="btn btn-default" type="button" id="datahjconserto">Hoje</button>
 											</span>
-										</div><br>
+										</div><span class="label label-danger" id="erroData1"></span><br>
 										<div class="form-group">
 											<label for="horainicio">Horario do inicio do conserto</label>
 											<input type="time" class="form-control" required="" id="horainicioconserto" name="horainicioconserto">
-										</div>
+										</div><span class="label label-danger" id="erroHora1"></span><br>
 										<label for="datafim">Data do fim da ocorrencia</label>
 										<div class="input-group">
 											<input type="date" class="form-control" required="" id="datafim" name="datafim">
 											<span class="input-group-btn">
 												<button class="btn btn-default" type="button" id="datahjfim">Hoje</button>
 											</span>
-										</div>
+										</div><span class="label label-danger" id="erroData2"></span>
 										<div class="form-group">
 											<label for="horafim">Horario do fim da ocorrencia</label>
 											<input type="time" class="form-control" required="" id="horafim" name="horafim">
-										</div>
+										</div><span class="label label-danger" id="erroHora2"></span><br>
 										<label class="checkbox-inline">
 											<input type="checkbox" id="terceiro" name="terceiro" value="terceiro"> <b>Foi necessario serviços de terceiros.</b>
 										</label><br><br>

@@ -59,8 +59,8 @@ class AjaxController extends Controller{
 			<h4><strong>Equipamento:</strong> '.$equipamento->tag.'</h4>
 			<p><strong>Motivação:</strong> '.$equipamento->descricao.'</p>
 			<p><strong>Serviço realizado:</strong> '.$registro->descricao_servico.'</p>
-			'.$terceiro.'		<p>Ocorrência dia: '.explode('-',$registro->data_inicio)[2].'/'.explode('-',$registro->data_inicio)[1].'/'.explode('-',$registro->data_inicio)[0].' as '.$registro->hora_inicio.'<br>Inicio da manutenção: '.explode('-',$registro->conserto_inicio)[2].'/'.explode('-',$registro->conserto_inicio)[1].'/'.explode('-',$registro->conserto_inicio)[0].' as '.$registro->hora_inicio_conserto.'		  <br>Fim: '.explode('-',$registro->data_termino)[2].'/'.explode('-',$registro->data_termino)[1].'/'.explode('-',$registro->data_termino)[0].' as '.$registro->hora_termino.'</p>
-			<p>Seviço demorou '.$dias.''.$registro->soma_horas.' Horas</p>
+			'.$terceiro.'		<p>Ocorrência dia: '.explode('-',$registro->data_inicio)[2].'/'.explode('-',$registro->data_inicio)[1].'/'.explode('-',$registro->data_inicio)[0].' às '.$registro->hora_inicio.'<br>Inicio da manutenção: '.explode('-',$registro->conserto_inicio)[2].'/'.explode('-',$registro->conserto_inicio)[1].'/'.explode('-',$registro->conserto_inicio)[0].' às '.$registro->hora_inicio_conserto.'		  <br>Fim: '.explode('-',$registro->data_termino)[2].'/'.explode('-',$registro->data_termino)[1].'/'.explode('-',$registro->data_termino)[0].' às '.$registro->hora_termino.'</p>
+			<p>Tempo de execução do serviço: '.$dias.''.$registro->soma_horas.' Horas</p>
 			<div class="col-md-4 col-md-offset-1 well well-sm">
 				<h4>Pecas utilizadas:</h4>
 				<p>';

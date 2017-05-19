@@ -49,8 +49,8 @@
 		<?php foreach($view_equipamento as $val){ ?>
 		<div class="col-md-10 col-md-offset-1">
 			<fieldset><legend><strong><?=$val->tag?></strong></legend>
-				<p>Quantidade de horas parada no mês de <i><?=$mes[$view_mes]?></i>: <strong><?=$view_horas[$val->id]?> Horas</strong></p>
-				<?php if($view_horaParada[$val->id] != 0){ ?> <p class="bg-danger" style="color: white;padding: 3px">Quantidade de horas que a produção ficou parada no mês de <i><?=$mes[$view_mes]?></i>: <strong><?=$view_horaParada[$val->id]?> Horas</strong></p> <?php } ?>
+				<p>Quantidade de horas que o equipamento ficou parado no mês de <i><?=$mes[$view_mes]?></i>: <strong><?=$view_horas[$val->id]?> Horas</strong></p>
+				<?php if($view_horaParada[$val->id] != 0){ ?> <p ><i class="fa fa-exclamation-triangle" style="color: red;margin-left: -18px;" aria-hidden="true"></i> Quantidade de horas que a produção ficou devido a esse equipamento no mês de <i><?=$mes[$view_mes]?></i>: <strong><?=$view_horaParada[$val->id]?> Horas</strong></p> <?php } ?>
 				<p>Foram feita(s) <strong><?=$view_quantidade[$val->id]?></strong> manutenção ou melhoria no equipamento no mês de <?=$mes[$view_mes]?></p>
 				<p>Mecânicos que execultaram alguma ação no equipamento:</p>
 				<table class="table">
@@ -58,7 +58,7 @@
 						<tr>
 							<th>Nome(s)</th>
 							<th>Data do registro</th>
-							<th>Visualizar Relatorio</th>
+							<th>Visualizar Relatório</th>
 						</tr>
 					</thead>
 					<tbody>

@@ -62,12 +62,12 @@ if(isset($view_dados)){
 										var endDt=document.getElementById("consertoinicio").value;
 										if( (new Date(startDt).getTime() <= new Date(endDt).getTime())){
 											if((new Date(startDt).getTime() == new Date(endDt).getTime()) && (new Date("2017-05-17 "+$("#horainicio").val()).getTime()) > (new Date("2017-05-17 "+$("#horainicioconserto").val()).getTime()) ){
-												$("#erroHora1").html("A hora do inicio do concerto e inferiro a hora de inicio da ocorência!");
+												$("#erroHora1").html("A hora do inicio do conserto e inferior a hora de inicio da ocorência!");
 											}else{
 												var endDt=document.getElementById("datafim").value;
 												if( (new Date(startDt).getTime() <= new Date(endDt).getTime())){
 													if((new Date(startDt).getTime() == new Date(endDt).getTime()) && (new Date("2017-05-17 "+$("#horainicio").val()).getTime()) > (new Date("2017-05-17 "+$("#horafim").val()).getTime()) ){
-														$("#erroHora2").html("A hora do fim da ocorência e inferiro a hora de inicio da ocorência!");
+														$("#erroHora2").html("A hora do fim da ocorência e inferior a hora de inicio da ocorência!");
 													}else{
 														$(this).parent().hide("fast");
 														$("#pro3").parent().show('fast');
@@ -77,9 +77,9 @@ if(isset($view_dados)){
 														$("#erroHora1").html("");
 														$("#erroHora1").html("");
 													}
-												}else{$("#erroData2").html("A data do fim da ocorência não pode ser inferiro a data de inicio da ocorência!");$("#datafim").focus();}
+												}else{$("#erroData2").html("A data do fim da ocorência não pode ser inferior a data de inicio da ocorência!");$("#datafim").focus();}
 											}
-										}else{$("#erroData1").html("A data de inicio do concerto não pode ser inferiro a data de inicio da ocorência!");$("#consertoinicio").focus();}
+										}else{$("#erroData1").html("A data de inicio do conserto não pode ser inferior a data de inicio da ocorência!");$("#consertoinicio").focus();}
 									}else{$("#erro1").html("Preencha todos os campos!")}
 								}else{$("#erro1").html("Preencha todos os campos!")}
 							}else{$("#erro1").html("Preencha todos os campos!")}
@@ -159,7 +159,7 @@ if(isset($view_dados)){
 				if((dt.getDate()) < 10 ){dia = "0"+dia;}
 				var diaAtual = dt.getFullYear() + "-" + mes + "-" + dia;	
 				$("#datahjinicio").click(function(event) {
-					$('#datainicio').val(diaAtual); //Atribui o valor do dia atual
+					$('#datainicio').val(diaAtual); //Atribui inferior o valor do dia atual
 				});
 				$("#datahjconsertofim").click(function(){
 					$("#consertofim").val(diaAtual);
@@ -179,7 +179,7 @@ if(isset($view_dados)){
 					<div class="panel panel-primary animated flipInY">
 						<div class="panel-heading">
 							<h3 class="panel-title text-center">     
-								FORMULARIO DE MANUENTÇÃO
+								FORMULÁRIO DE MANUTENÇÃO
 							</h3>      
 						</div>
 						<div class="panel-body">
@@ -200,14 +200,14 @@ if(isset($view_dados)){
 										<div class="form-group">
 											<label for="desEquip">Descrição do equipamento</label>
 											<textarea class="form-control" id="desEquip" name="desEquip" rows="3" placeholder="Descrição do Equipamento"><?=$desc?></textarea>
-											<p id="cadastrado">Caso o equipamento não esteja cadastrado ao proceguir ele sera cadastrado!</p>
+											<p id="cadastrado">Caso o equipamento não esteja cadastrado ao prosseguir ele sera cadastrado!</p>
 										</div>
 										<div class="form-group">
 											<label for="motivo">Motivo do serviço</label>
 											<textarea class="form-control" id="motivo" name="motivo" rows="3" placeholder="Descrição do Equipamento"><?=$desc?></textarea>
 										</div>
 										<p id="erro0"></p>
-										<button type="button" id="pro1" class="btn btn-success btn-lg"><b>Proceguir</b></button>
+										<button type="button" id="pro1" class="btn btn-success btn-lg"><b>Prosseguir</b></button>
 									</fieldset>
 									<fieldset style="display: none"><legend>SERVIÇO</legend>
 										<div class="radio-inline">
@@ -238,9 +238,9 @@ if(isset($view_dados)){
 											<input type="checkbox" id="parada" name="parada" value="Ocorreu parada da produção"> <b>Ocorreu parada da produção</b>
 										</label><br><br>
 										
-										<label for="desServico">Descrição do serviço</label>
+										<label for="desServico">Descrição do serviço realizado.</label>
 										<textarea class="form-control" id="desServico" name="desServico" rows="3" placeholder="Descrição do servço"></textarea><br>
-										<label for="datainicio">Inicio da Ocorrência</label>
+										<label for="datainicio">Inicio da ocorrência</label>
 										<div class="input-group">
 											<input type="date" class="form-control" required="" id="datainicio" name="datainicio">
 											<span class="input-group-btn">
@@ -248,7 +248,7 @@ if(isset($view_dados)){
 											</span>
 										</div><br>
 										<div class="form-group">
-											<label for="horainicio">Horario do inicio da ocorência</label>
+											<label for="horainicio">Horário do inicio da ocorência</label>
 											<input type="time" class="form-control" required="" id="horainicio" name="horainicio">
 										</div>
 										<label for="consertoinicio">Inicio do conserto</label>
@@ -259,10 +259,10 @@ if(isset($view_dados)){
 											</span>
 										</div><span class="label label-danger" id="erroData1"></span><br>
 										<div class="form-group">
-											<label for="horainicio">Horario do inicio do conserto</label>
+											<label for="horainicio">Horário do inicio do conserto</label>
 											<input type="time" class="form-control" required="" id="horainicioconserto" name="horainicioconserto">
 										</div><span class="label label-danger" id="erroHora1"></span><br>
-										<label for="datafim">Data do fim da ocorrencia</label>
+										<label for="datafim">Data do fim da ocorrência</label>
 										<div class="input-group">
 											<input type="date" class="form-control" required="" id="datafim" name="datafim">
 											<span class="input-group-btn">
@@ -270,11 +270,11 @@ if(isset($view_dados)){
 											</span>
 										</div><span class="label label-danger" id="erroData2"></span>
 										<div class="form-group">
-											<label for="horafim">Horario do fim da ocorrencia</label>
+											<label for="horafim">Horário do fim da ocorrência</label>
 											<input type="time" class="form-control" required="" id="horafim" name="horafim">
 										</div><span class="label label-danger" id="erroHora2"></span><br>
 										<label class="checkbox-inline">
-											<input type="checkbox" id="terceiro" name="terceiro" value="terceiro"> <b>Foi necessario serviços de terceiros.</b>
+											<input type="checkbox" id="terceiro" name="terceiro" value="terceiro"> <b>Foi necessário serviços de terceiros.</b>
 										</label><br><br>
 										<div id="formterceiro">
 											
@@ -283,7 +283,7 @@ if(isset($view_dados)){
 										<button type="button" class="btn btn-danger" id="volta3" value="3">
 											<span class="fa fa-arrow-left" aria-hidden="true"></span> Voltar
 										</button>
-										<button type="button" id="pro2" class="btn btn-success btn-lg"><b>Proceguir</b></button>
+										<button type="button" id="pro2" class="btn btn-success btn-lg"><b>Prosseguir</b></button>
 									</fieldset>
 									<fieldset style="display: none"><legend>PEÇAS UTILIZADAS</legend>
 										<div class="form-group form-inline">
@@ -305,7 +305,7 @@ if(isset($view_dados)){
 										<button type="button" class="btn btn-danger" id="volta2" value="3">
 											<span class="fa fa-arrow-left" aria-hidden="true"></span> Voltar
 										</button>
-										<button type="button" id="pro3" class="btn btn-success btn-lg"><b>Proceguir</b></button>
+										<button type="button" id="pro3" class="btn btn-success btn-lg"><b>Prosseguir</b></button>
 									</fieldset>
 									<fieldset style="display: none"><legend>EXECUTANTE</legend>
 										<label>Nome: </label>

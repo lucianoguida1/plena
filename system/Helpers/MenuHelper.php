@@ -27,7 +27,7 @@
 							'Por Equipamento'=>"visualizar/paradaMes/".Registro::last()->equipamento_id."/".intval(date('m'))."/".intval(date('Y')),
 							'Por Mês'=>"visualizar/paradaMesAll/".intval(date('m'))."/".intval(date('Y'))
 							),
-						"Mecacinos/briefcase"=>array(
+						"Mecânicos/briefcase"=>array(
 							'Cadastrar'=>"Mecanico/cadmecanico",
 							'Remover'=>"Mecanico/removermec"
 							),

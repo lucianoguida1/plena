@@ -10,8 +10,8 @@
 				</div>
 				<div class="panel-body">
 					<?php foreach(Equipamento::all() as $val){?>
-						<div class="col-md-4 book">
-							<div class="panel panel-info animated flipInY">
+						<div class="col-md-4">
+							<div class="panel panel-info animated flipInY" style="border: 1px solid #41b3f9">
 								<div class="panel-heading">
 									<h3 class="panel-title text-center">     
 										<b><?=$val->tag?></b>
@@ -20,7 +20,7 @@
 								<div class="panel-body">
 									<p><b><?=$val->setor->nome?></b></p>
 									<p><?=$val->descricao?></p>
-									<a class=" btn btn-info" href="<?=SITE.'registro/index/'.$val->id?>">Enviar Registro</a>
+									<button class="btn btn-primary form-control" href="<?=SITE.'registro/index/'.$val->id?>">Enviar Registro</button>
 								</div>
 							</div>
 						</div>

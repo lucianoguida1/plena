@@ -6,7 +6,7 @@
     	}
         public function indexAction($msg="",$user=""){
             if($msg != "" && $user != ""){ $data['message'] = $msg; $data['user'] = $user;}else{ $data = "";}
-            $this->view('Login',$data,true,'Generic','',array(CSS.'animate.css'));
+            $this->view('Login',$data,true,'generic','',array(CSS.'animate.css'));
         }
         public function logarAction(){
     		$data=array();
@@ -30,12 +30,12 @@
     				$data["message"]=$auth->getErrors();
     			}
     		}
-    		$this->view('Login',$data,true,'Generic');
+    		$this->view('Login',$data,true,'generic');
         }
 
         public function CadastroAction($msg =""){
             if($msg != ""){ $data['message'] = $msg; }else{ $data = "";}
-            $this->view('Cadastro',$data,true,'Generic');
+            $this->view('Cadastro',$data,true,'generic');
         }
         public function SalvarAction(){
             $validetor = new Validator($_REQUEST);

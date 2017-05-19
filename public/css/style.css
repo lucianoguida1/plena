@@ -580,13 +580,25 @@ hr {
     -webkit-box-shadow: 0!important;
     -moz-box-shadow: 0!important;
     margin-top: 0;
+    /*position: inherit;*/
+    background-color: #edf1f5;
+    border-bottom: 1px solid black;
+    float: left;
+}
+#side-menu>.dropdown>.dropdown-menu {
+    border: 1px solid rgba(120, 130, 140, .13);
+    border-radius: 0;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, .05)!important;
+    -webkit-box-shadow: 0!important;
+    -moz-box-shadow: 0!important;
+    margin-top: 0;
     position: inherit;
     background-color: #edf1f5;
     border-bottom: 1px solid black;
-    float: none
+    float: none;
 }
 .dropdown-menu>li>a {
-    padding: 9px 20px
+    padding: 9px 15px
 }
 .dropdown-menu>li>a:focus,
 .dropdown-menu>li>a:hover {
@@ -1464,7 +1476,7 @@ table.dataTable thead .sorting:after {
 }
 .panel .panel-heading .panel-title {
     font-size: 16px;
-    color: #263238
+    color: white;
 }
 .panel .panel-heading a i {
     font-size: 12px;
@@ -1552,9 +1564,9 @@ table.dataTable thead .sorting:after {
 }
 .panel-darkblue .panel-heading,
 .panel-primary .panel-heading {
-    border-color: #7460ee;
-    color: #fff;
-    background-color: #7460ee
+    border-color: #045FFA;
+    color: white;
+    background-color: #045FFA
 }
 .panel-darkblue .panel-heading a,
 .panel-primary .panel-heading a {
@@ -1592,7 +1604,7 @@ table.dataTable thead .sorting:after {
 }
 .panel-blue a,
 .panel-info a {
-    color: #41b3f9
+    color: white;
 }
 .panel-blue a:hover,
 .panel-info a:hover {
@@ -4233,7 +4245,7 @@ table.focus-on tbody tr.focused th {
 .right-sidebar .rpanel-title {
     display: block;
     padding: 21px;
-    color: #fff;
+    color: white;
     text-transform: uppercase;
     font-size: 13px;
     background: #2cabe3
@@ -5801,11 +5813,11 @@ ul.select-row-icon li a:hover i.whn-hov {
     background: rgba(0, 0, 0, 0)
 }
 #side-menu li a {
-    color: #97999f;
+    color: black;
     width: 240px
 }
 #side-menu li a:focus {
-    background: rgba(0, 0, 0, 0)
+    background: rgba(0, 0, 0, 0);
 }
 #side-menu li.devider {
     margin: 7px 0;
